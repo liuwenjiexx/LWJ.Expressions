@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expression xmlns:x="urn:schema-lwj:expression"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+
+
+  <expr name="switch" result="20" resultType="int32">
+    <!--
+  int func( int n){
+      int result;
+      switch(n){
+        case 1:
+          result=10;
+          break;
+        case 2:
+        case 3:
+          result=20;
+          break;
+        default:
+          result=-1;
+          break;
+      }
+      return result;
+    }
+    -->
+    <x:func>
+      <x:vars>
+        <x:var type="int32">n</x:var>
+      </x:vars>
+      <x:block>
+        <!--function body variable-->
+        <x:vars>
+          <x:var type="int32" >result</x:var>
+        </x:vars>
+        <x:switch>
+          <!--switch test value-->
+          <x:var>n</x:var>
+          <!--switch-case-->
+          <x:case>
+            <!--case test value-->
+            <x:int32>1</x:int32>
+            <x:assign>
+              <!--case body-->
+              <x:var>result</x:var>
+              <x:int32>10</x:int32>
+            </x:assign>
+          </x:case>
+          <x:case>
+            <x:int32>2</x:int32>
+            <x:int32>3</x:int32>
+            <x:assign>
+              <x:var>result</x:var>
+              <x:int32>20</x:int32>
+            </x:assign>
+          </x:case>
+          <!--switch-default-->
+          <x:default>
+            <!--default body-->
+            <x:assign>
+              <x:var>result</x:var>
+              <x:int32>-1</x:int32>
+            </x:assign>
+          </x:default>
+        </x:switch>
+        <x:return>
+          <x:var>result</x:var>
+        </x:return>
+      </x:block>
+    </x:func>
+  
+  </expr>
+  
+
+</expression>

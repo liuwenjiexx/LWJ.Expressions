@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expression xmlns:x="urn:schema-lwj:expression"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+
+  <test name="static min" result="1" resultType="int32">
+    <x:return>
+      <x:call method="staticMin" type="LWJ.Expressions.Xml.Test.CallTest+TestClass,LWJ.Expressions.Xml.Test">
+        <x:null/>
+        <x:int32>1</x:int32>
+        <x:int32>2</x:int32>
+      </x:call>
+    </x:return>
+  </test>
+
+  <test name="instance min" result="1" resultType="int32">
+    <x:return>
+      <x:call method="instanceMin">
+        <x:var>instance</x:var>
+        <x:int32>1</x:int32>
+        <x:int32>2</x:int32>
+      </x:call>
+    </x:return>
+  </test>
+  <test name="instance multiply" result="3" resultType="int32">
+    <x:return>
+      <x:multiply>
+        <x:call method="instanceMin">
+          <x:var>instance</x:var>
+          <x:int32>1</x:int32>
+          <x:int32>2</x:int32>
+        </x:call>
+        <x:int32>3</x:int32>
+      </x:multiply>
+    </x:return>
+  </test>
+</expression>

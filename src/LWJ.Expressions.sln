@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LWJ.Expressions", "LWJ.Expressions\LWJ.Expressions.csproj", "{EEAA62ED-3AA6-4B00-883E-7913D39846D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LWJ.Expressions", "..\Test\Test.LWJ.Expressions\Test.LWJ.Expressions.csproj", "{309D14A0-B48B-46CF-9C40-D9C82C189A4C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{84E684F7-70D9-4761-8B64-CCC9A98DAFFE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LWJ.Expressions.Xml", "LWJ.Expressions.Xml\LWJ.Expressions.Xml.csproj", "{D998EE0F-09CC-4E2E-A664-C71F7178BF97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LWJ.Expressions.Xml.Test", "..\Test\LWJ.Expressions.Xml.Test\LWJ.Expressions.Xml.Test.csproj", "{C1659807-0350-4CC3-9A62-414655C77F2D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resources", "Resources", "{F4DD0711-36E8-4754-B283-528824DA8759}"
+	ProjectSection(SolutionItems) = preProject
+		..\resources\lwj.expr.xsd = ..\resources\lwj.expr.xsd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{B21389FE-11DC-403C-977B-96B0008CA716}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEAA62ED-3AA6-4B00-883E-7913D39846D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEAA62ED-3AA6-4B00-883E-7913D39846D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEAA62ED-3AA6-4B00-883E-7913D39846D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEAA62ED-3AA6-4B00-883E-7913D39846D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{309D14A0-B48B-46CF-9C40-D9C82C189A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{309D14A0-B48B-46CF-9C40-D9C82C189A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{309D14A0-B48B-46CF-9C40-D9C82C189A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{309D14A0-B48B-46CF-9C40-D9C82C189A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D998EE0F-09CC-4E2E-A664-C71F7178BF97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D998EE0F-09CC-4E2E-A664-C71F7178BF97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D998EE0F-09CC-4E2E-A664-C71F7178BF97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D998EE0F-09CC-4E2E-A664-C71F7178BF97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1659807-0350-4CC3-9A62-414655C77F2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1659807-0350-4CC3-9A62-414655C77F2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1659807-0350-4CC3-9A62-414655C77F2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1659807-0350-4CC3-9A62-414655C77F2D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EEAA62ED-3AA6-4B00-883E-7913D39846D2} = {B21389FE-11DC-403C-977B-96B0008CA716}
+		{309D14A0-B48B-46CF-9C40-D9C82C189A4C} = {84E684F7-70D9-4761-8B64-CCC9A98DAFFE}
+		{D998EE0F-09CC-4E2E-A664-C71F7178BF97} = {B21389FE-11DC-403C-977B-96B0008CA716}
+		{C1659807-0350-4CC3-9A62-414655C77F2D} = {84E684F7-70D9-4761-8B64-CCC9A98DAFFE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {305F86AE-528E-428C-90A6-4A0BB19D1271}
+	EndGlobalSection
+EndGlobal

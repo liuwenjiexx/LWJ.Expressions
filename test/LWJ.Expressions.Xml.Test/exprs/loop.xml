@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expression xmlns:x="urn:schema-lwj:expression" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+  <expr name="loop" result="5" resultType="int32">
+    <!--
+    int i=0;
+    while(true){
+      if(i>=5) break;
+      i++;
+    }
+    -->
+    <x:vars>
+      <x:var  type="int32" >i</x:var>
+    </x:vars>
+    <x:assign>
+      <x:var>i</x:var>
+      <x:int32>0</x:int32>
+    </x:assign>
+    <x:loop>
+      <x:block>
+        <x:if>          
+          <x:greaterThanOrEqual>
+            <x:var>i</x:var>
+            <x:int32>5</x:int32>
+          </x:greaterThanOrEqual>
+          <x:break/>
+        </x:if>
+        <x:postIncrement>
+          <x:var>i</x:var>
+        </x:postIncrement>
+      </x:block>
+    </x:loop>
+    <x:return>
+      <x:var>i</x:var>
+    </x:return>
+  </expr>
+
+</expression>

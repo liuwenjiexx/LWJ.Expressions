@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expression xmlns:x="urn:schema-lwj:expression"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+
+  <test name="add" result="3" resultType="int32">
+    <x:func name="add" returnType="int32">
+      <x:vars>
+        <x:var type="int32">a</x:var>
+        <x:var type="int32">b</x:var>
+      </x:vars>
+      <x:return>
+        <x:add>
+          <x:var>a</x:var>
+          <x:var>b</x:var>
+        </x:add>
+      </x:return>
+    </x:func>
+    <x:return>
+      <x:call>
+        <x:var>add</x:var>
+        <x:int32>1</x:int32>
+        <x:int32>2</x:int32>
+      </x:call>
+    </x:return>
+  </test>
+
+
+  <test name="clamp"  result="10" resultType="int32">
+
+    <x:func name="min_" returnType="int32">
+      <x:vars>
+        <x:var type="int32">a</x:var>
+        <x:var type="int32">b</x:var>
+      </x:vars>
+      <x:return>
+        <x:if>
+          <x:lessThan>
+            <x:var>a</x:var>
+            <x:var>b</x:var>
+          </x:lessThan>
+          <x:var>a</x:var>
+          <x:else>
+            <x:var>b</x:var>
+          </x:else>
+        </x:if>
+      </x:return>
+    </x:func>
+
+    <x:func name="max_" returnType="int32">
+      <x:vars>
+        <x:var type="int32">a</x:var>
+        <x:var type="int32">b</x:var>
+      </x:vars>
+      <x:return>
+        <x:if>
+          <x:greaterThan>
+            <x:var>a</x:var>
+            <x:var>b</x:var>
+          </x:greaterThan>
+          <x:var>a</x:var>
+          <x:else>
+            <x:var>b</x:var>
+          </x:else>
+        </x:if>
+      </x:return>
+    </x:func>
+
+    <x:func name="clamp" returnType="int32">
+      <x:vars>
+        <x:var type="int32">value</x:var>
+        <x:var type="int32">min</x:var>
+        <x:var type="int32">max</x:var>
+      </x:vars>
+      <x:return>
+        <x:call>
+          <x:var>max_</x:var>
+          <x:call>
+            <x:var>min_</x:var>
+            <x:var>value</x:var>
+            <x:var>max</x:var>
+          </x:call>
+          <x:var>min</x:var>
+        </x:call>
+      </x:return>
+    </x:func>
+    <x:return>
+      <x:call>
+        <x:var>clamp</x:var>
+        <x:int32>100</x:int32>
+        <x:int32>1</x:int32>
+        <x:int32>10</x:int32>
+      </x:call>
+    </x:return>
+  </test>
+
+
+  <test name="callAnonymous" result="1" resultType="int32">
+    <x:return>
+      <x:call>
+        <x:func returnType="int32">
+          <x:return>
+            <x:int32>1</x:int32>
+          </x:return>
+        </x:func>
+      </x:call>
+    </x:return>
+  </test>
+
+  <test name="callAnonymous_Arg2" result="3" resultType="int32">
+    <x:return>
+      <x:call>
+        <x:func returnType="int32">
+          <x:vars>
+            <x:var type="int32">a</x:var>
+            <x:var type="int32">b</x:var>
+          </x:vars>
+          <x:return>
+            <x:add>
+              <x:var>a</x:var>
+              <x:var>b</x:var>
+            </x:add>
+          </x:return>
+        </x:func>
+        <x:int32>1</x:int32>
+        <x:int32>2</x:int32>
+      </x:call>
+    </x:return>
+  </test>
+
+</expression>

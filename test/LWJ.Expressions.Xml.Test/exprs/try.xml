@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expression xmlns:x="urn:schema-lwj:expression"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+
+  <try>
+    <catch type="">
+
+    </catch>
+  </try>
+
+</expression>

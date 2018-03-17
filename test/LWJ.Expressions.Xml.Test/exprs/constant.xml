@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<test  xmlns:x="urn:schema-lwj:expression"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+  <!--
+  <expr name="constant_int32" result="1" resultType="int">
+
+    <x:return>
+      <x:constant type="int32">1</x:constant>
+    </x:return>
+  </expr>
+  <expr name="constant_int64" result="1" resultType="long">
+    <x:return>
+      <x:constant type="int64">1</x:constant>
+    </x:return>
+  </expr>
+  <expr name="constant_float32" result="1.1" resultType="float">
+    <x:return>
+      <x:constant type="float32">1.1</x:constant>
+    </x:return>
+  </expr>
+  <expr name="constant_float64" result="1.1" resultType="double">
+    <x:return>
+      <x:constant type="float64">1.1</x:constant>
+    </x:return>
+  </expr>
+  <expr name="constant_bool_true" result="true" resultType="bool">
+    <x:return>
+      <x:constant type="bool">true</x:constant>
+    </x:return>
+  </expr>
+  <expr name="constant_bool_false" result="false" resultType="bool">
+    <x:return>
+      <x:constant type="bool">false</x:constant>
+    </x:return>
+  </expr>
+  <expr name="constant_string" result="abc" resultType="string">
+    <x:return>
+      <x:constant type="string">abc</x:constant>
+    </x:return>
+  </expr>
+  -->
+  <!--<expr name="constant_type_string" result="System.String" resultType="type">
+    <return>
+      <x:constant type="type">System.String</x:constant>
+    </return>
+  </expr>-->
+
+</test>

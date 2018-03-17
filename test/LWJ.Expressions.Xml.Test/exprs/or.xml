@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expression xmlns:x="urn:schema-lwj:expression"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+  <expr name="or" result="true" resultType="bool">
+    <!--(false || true)-->
+    <x:return>
+      <x:or>
+        <x:false/>
+        <x:true/>
+      </x:or>
+    </x:return>
+  </expr>
+</expression>

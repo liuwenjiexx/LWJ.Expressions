@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<expression xmlns:x="urn:schema-lwj:expression"
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
+>
+
+  <expr name="constant_named_true" result="true" resultType="bool">
+    <x:return>
+      <x:true/>
+    </x:return>
+  </expr>
+  <expr name="constant_named_false" result="false" resultType="bool">
+    <x:return>
+      <x:false/>
+    </x:return>
+  </expr>
+  <expr name="constant_named_null">
+    <x:return>
+      <x:null/>
+    </x:return>
+  </expr>
+  <expr name="named_type_int32" result="1" resultType="int">
+    <x:return>
+      <x:int32>1</x:int32>
+    </x:return>
+  </expr>
+  <expr name="named_type_int64" result="1" resultType="long">
+    <x:return>
+      <x:int64>1</x:int64>
+    </x:return>
+  </expr>
+  <expr name="named_type_float32" result="1.1" resultType="float">
+    <x:return>
+      <x:float32>1.1</x:float32>
+    </x:return>
+  </expr>
+  <expr name="named_type_float64" result="1.1" resultType="double">
+    <x:return>
+      <x:float64>1.1</x:float64>
+    </x:return>
+  </expr>
+  <expr name="named_type_bool_true" result="true" resultType="bool">
+    <x:return>
+      <x:bool>true</x:bool>
+    </x:return>
+  </expr>
+  <expr name="named_type_bool_false" result="false" resultType="bool">
+    <x:return>
+      <x:bool>false</x:bool>
+    </x:return>
+  </expr>
+  <expr name="named_type_string" result="abc" resultType="string">
+    <x:return>
+      <x:string>abc</x:string>
+    </x:return>
+  </expr>
+  <expr name="named_type_type_string" result="System.String" resultType="type">
+    <x:return>
+      <x:type>System.String</x:type>
+    </x:return>
+  </expr>
+  <expr name="named_type_datetime" result="2017/1/2 03:04:05" resultType="datetime" >
+    <x:return>
+      <x:datetime>2017-01-02T03:04:05</x:datetime>
+    </x:return>
+  </expr>
+  <expr name="multiply_int32_float32" result="0.5" resultType="float32" >
+    <x:return>
+      <x:multiply>
+        <x:float32>1</x:float32>
+        <x:float32>0.5</x:float32>
+      </x:multiply>
+    </x:return>
+  </expr>
+  <expr name="type_convert_int32_float32" result="1" resultType="float32" >
+    <x:return>
+      <x:convert>
+        <x:int32>1</x:int32>
+        <x:type>float32</x:type>
+      </x:convert>
+    </x:return>
+  </expr>
+  <!--<expr name="type_as_int32_float32" result="1" resultType="float32" >
+    <x:return>
+      <x:as>
+        <x:int32>1</x:int32>
+        <x:type>float32</x:type>
+      </x:as>
+    </x:return>
+  </expr>
+  <expr name="type_is_int32" result="1" resultType="float32" >
+    <x:return>
+      <x:is>
+        <x:int32>1</x:int32>
+        <x:type>int32</x:type>
+      </x:is>
+    </x:return>
+  </expr>-->
+  <!--<expr name="convert_int32_float32" result="0.5" resultType="float32" >
+    <x:return>
+      <x:float32>
+        <x:int32>1</x:int32>
+      </x:float32>
+    </x:return>
+  </expr>-->
+</expression>
