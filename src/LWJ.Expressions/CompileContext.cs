@@ -122,8 +122,12 @@ namespace LWJ.Expressions
                 if (operAttr == null)
                     continue;
                 ExpressionType Operator = operAttr.OperatorType;
-                if (Operator == ExpressionType.None)
-                    Operator = (ExpressionType)Enum.Parse(typeof(ExpressionType), method.Name);
+                if (Operator == ExpressionType.None && !string.IsNullOrEmpty(method.Name))
+                {
+                    if (Enum.IsDefined(typeof(ExpressionType), method.Name))
+                        Operator = (ExpressionType)Enum.Parse(typeof(ExpressionType), method.Name);
+                }
+
                 if (Operator == ExpressionType.None)
                     throw new Exception("override operator ExpressionType.None, method name:" + method.Name + ", method:" + method);
 
@@ -256,8 +260,9 @@ namespace LWJ.Expressions
             }
             if (dic != null)
             {
-                if (dic.TryGetValue(new Tuple<Type, Type>(typeof(object), typeof(Type)), out operInfo))
-                    return true;
+
+                //if (dic.TryGetValue(new Tuple<Type, Type>(typeof(object), typeof(Type)), out operInfo))
+                //    return true;
             }
             operInfo = null;
             return false;

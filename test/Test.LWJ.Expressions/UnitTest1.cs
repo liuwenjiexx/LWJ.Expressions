@@ -63,38 +63,38 @@ namespace Test.LWJ.Expressions
         }
 
 
-        [TestMethod]
-        public void TestDefaultLang()
-        {
+        //[TestMethod]
+        //public void TestDefaultLang()
+        //{
 
-            var culture = Thread.CurrentThread.CurrentCulture;
-            Console.WriteLine("default culture:" + culture.DisplayName + ", " + culture.Name);
-            culture = Thread.CurrentThread.CurrentUICulture;
-            Console.WriteLine("default ui culture:" + culture.DisplayName + ", " + culture.Name);
-            Console.WriteLine("hello:" + Resource1.Hello);
+        //    var culture = Thread.CurrentThread.CurrentCulture;
+        //    Console.WriteLine("default culture:" + culture.DisplayName + ", " + culture.Name);
+        //    culture = Thread.CurrentThread.CurrentUICulture;
+        //    Console.WriteLine("default ui culture:" + culture.DisplayName + ", " + culture.Name);
+        //    Console.WriteLine("hello:" + Resource1.Hello);
 
-            culture = new System.Globalization.CultureInfo("zh-CN");
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
+        //    culture = new System.Globalization.CultureInfo("zh-CN");
+        //    Thread.CurrentThread.CurrentCulture = culture;
+        //    Thread.CurrentThread.CurrentUICulture = culture;
 
-            Console.WriteLine("culture:" + culture.DisplayName + ", " + culture.Name);
-            Console.WriteLine("hello:" + Resource1.Hello);
+        //    Console.WriteLine("culture:" + culture.DisplayName + ", " + culture.Name);
+        //    Console.WriteLine("hello:" + Resource1.Hello);
 
-            culture = new System.Globalization.CultureInfo("zh-US");
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
+        //    culture = new System.Globalization.CultureInfo("zh-US");
+        //    Thread.CurrentThread.CurrentCulture = culture;
+        //    Thread.CurrentThread.CurrentUICulture = culture;
 
-            Console.WriteLine("culture:" + culture.DisplayName + ", " + culture.Name);
-            Console.WriteLine("hello:" + Resource1.Hello);
+        //    Console.WriteLine("culture:" + culture.DisplayName + ", " + culture.Name);
+        //    Console.WriteLine("hello:" + Resource1.Hello);
 
 
-            culture = new System.Globalization.CultureInfo("en-US");
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
+        //    culture = new System.Globalization.CultureInfo("en-US");
+        //    Thread.CurrentThread.CurrentCulture = culture;
+        //    Thread.CurrentThread.CurrentUICulture = culture;
 
-            Console.WriteLine("culture:" + culture.DisplayName + ", " + culture.Name);
-            Console.WriteLine("hello:" + Resource1.Hello);
-        }
+        //    Console.WriteLine("culture:" + culture.DisplayName + ", " + culture.Name);
+        //    Console.WriteLine("hello:" + Resource1.Hello);
+        //}
 
         [TestMethod]
         public void TestReadArray()
