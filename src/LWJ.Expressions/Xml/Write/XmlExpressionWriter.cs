@@ -221,8 +221,34 @@ namespace LWJ.Expressions.Xml
         {
             BinaryExpression binary = (BinaryExpression)expr;
 
-            var nodeName = expr.ExpressionType.ToString();
-            nodeName = nodeName.Substring(0, 1).ToLower().ToString() + nodeName.Substring(1);
+            string nodeName ;
+            
+            switch (expr.ExpressionType)
+            {
+                case ExpressionType.Equal:
+                    nodeName = "eq";
+                    break;
+                case ExpressionType.NotEqual:
+                    nodeName = "neq";
+                    break;
+                case ExpressionType.LessThan:
+                    nodeName = "lt";
+                    break;
+                case ExpressionType.LessThanOrEqual:
+                    nodeName = "leq";
+                    break;
+                case ExpressionType.GreaterThan:
+                    nodeName = "gt";
+                    break;
+                case ExpressionType.GreaterThanOrEqual:
+                    nodeName = "geq";
+                    break;
+                default:
+                    nodeName= expr.ExpressionType.ToString();
+                    nodeName = nodeName.Substring(0, 1).ToLower().ToString() + nodeName.Substring(1);
+                    break;
+            }
+
             writer.WriteStartExpression(nodeName, ExpressionNamespace);
 
             if (binary.Left != null)

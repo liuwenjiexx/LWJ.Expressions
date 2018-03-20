@@ -72,6 +72,7 @@ namespace LWJ.Expressions.Xml.Test
             string xml = Resource1.loop;
             Run(xml);
         }
+     
 
         [TestMethod]
         public void Switch_()

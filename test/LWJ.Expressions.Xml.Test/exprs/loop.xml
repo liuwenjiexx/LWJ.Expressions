@@ -1,13 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<expression xmlns:x="urn:schema-lwj:expression" 
+<expression xmlns:x="urn:schema-lwj:expression"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
 >
+
   <expr name="loop" result="5" resultType="int32">
     <!--
     int i=0;
+    while(i<5)
+      i++;    
+    -->
+    <x:vars>
+      <x:var  type="int32" >i</x:var>
+    </x:vars>
+    <x:assign>
+      <x:var>i</x:var>
+      <x:int32>0</x:int32>
+    </x:assign>
+    <x:loop>
+      <x:lt>
+        <x:var>i</x:var>
+        <x:int32>5</x:int32>
+      </x:lt>
+      <x:postIncrement>
+        <x:var>i</x:var>
+      </x:postIncrement>
+    </x:loop>
+    <x:return>
+      <x:var>i</x:var>
+    </x:return>
+  </expr>
+  <expr name="loop2" result="5" resultType="int32">
+    <!--
+    int i=0;
+    while(i++<5);
+    -->
+    <x:vars>
+      <x:var  type="int32" >i</x:var>
+    </x:vars>
+    <x:assign>
+      <x:var>i</x:var>
+      <x:int32>0</x:int32>
+    </x:assign>
+    <x:loop>
+      <x:lt>
+        <x:postIncrement>
+          <x:var>i</x:var>
+        </x:postIncrement>
+        <x:int32>5</x:int32>
+      </x:lt>
+    </x:loop>
+    <x:return>
+      <x:var>i</x:var>
+    </x:return>
+  </expr>
+  <expr name="loop3" result="5" resultType="int32">
+    <!--
+    int i=0;
     while(true){
-      if(i>=5) break;
+      if(i>=5) 
+        break;
       i++;
     }
     -->
@@ -19,12 +71,13 @@
       <x:int32>0</x:int32>
     </x:assign>
     <x:loop>
+      <x:true/>
       <x:block>
-        <x:if>          
-          <x:greaterThanOrEqual>
+        <x:if>
+          <x:geq>
             <x:var>i</x:var>
             <x:int32>5</x:int32>
-          </x:greaterThanOrEqual>
+          </x:geq>
           <x:break/>
         </x:if>
         <x:postIncrement>

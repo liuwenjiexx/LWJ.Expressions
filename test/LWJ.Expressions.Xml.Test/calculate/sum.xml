@@ -9,10 +9,10 @@
     </x:vars>
     <x:return>
       <x:if>
-        <x:lessThanOrEqual>
+        <x:leq>
           <x:var>n</x:var>
           <x:int32>1</x:int32>
-        </x:lessThanOrEqual>
+        </x:leq>
         <x:int32>1</x:int32>        
         <x:else>
           <x:add>

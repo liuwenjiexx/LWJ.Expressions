@@ -565,12 +565,24 @@ namespace LWJ.Expressions.Xml
 
         private static Expression ReadLoop(XmlExpressionReader reader)
         {
-            var exprs = reader.ReadChildExpressions(0, 1);
+            var exprs = reader.ReadChildExpressions(0, 2);
 
-            if (exprs == null || exprs.Length == 0)
+            if (exprs.Length == 0)
                 throw new NotBodyNodeException(reader.Node);
 
-            return Loop(exprs[0]);
+            Expression test, body, loop;
+
+            test = exprs[0];
+            if (exprs.Length == 2)
+            {
+                body = exprs[1];
+                loop = Loop(Block(IfThen(Not(test), Break()), body));
+            }
+            else
+            {
+                loop = Loop(Block(IfThen(Not(test), Break())));
+            }
+            return loop;
         }
 
         private static Expression ReadFunction(XmlExpressionReader reader)
@@ -596,7 +608,7 @@ namespace LWJ.Expressions.Xml
         {
             var childs = reader.ReadChildExpressions(0, 2);
             Type convertToType = childs[1].ValueType;
-               
+
             return Convert(childs[0], convertToType);
         }
         private static TypeBinaryExpresion ReadTypeAs(XmlExpressionReader reader)
@@ -672,6 +684,28 @@ namespace LWJ.Expressions.Xml
             {
                 string name = func.Method.Name;
                 name = (name[0] + "").ToLower() + name.Substring(1);
+
+                switch (name)
+                {
+                    case "equal":
+                        name = "eq";
+                        break;
+                    case "notEqual":
+                        name = "neq";
+                        break;
+                    case "lessThan":
+                        name = "lt";
+                        break;
+                    case "lessThanOrEqual":
+                        name = "leq";
+                        break;
+                    case "greaterThan":
+                        name = "gt";
+                        break;
+                    case "greaterThanOrEqual":
+                        name = "geq";
+                        break;
+                }
 
                 cachedReader[name] = new Func<XmlExpressionReader, Expression>((reader) =>
                 {

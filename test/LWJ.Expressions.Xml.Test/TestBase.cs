@@ -57,7 +57,7 @@ while running with --aot-only.*/
                 if (exprNode.NodeType != XmlNodeType.Element)
                     continue;
                 string testName = exprNode.Attributes["name"].Value;
-                Console.WriteLine("run:" + testName);
+                Console.WriteLine("run start:" + testName);
 
                 var expr = reader.Read(exprNode, true, compile);
 
@@ -77,6 +77,7 @@ while running with --aot-only.*/
                 }
 
                 Assert.AreEqual(assertResult, result, string.Format("name: {0}", testName));
+                Console.WriteLine("run end:" + testName);
             }
 
         }

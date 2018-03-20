@@ -244,33 +244,33 @@
 
 
   <!--compare expression-->
-
-  <xs:element name="equal" type="binaryExprType" substitutionGroup="expr">
+  
+  <xs:element name="eq" type="binaryExprType" substitutionGroup="expr">
     <xs:annotation>
       <xs:documentation>(a == b)</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="notEqual" type="binaryExprType" substitutionGroup="expr">
+  <xs:element name="neq" type="binaryExprType" substitutionGroup="expr">
     <xs:annotation>
       <xs:documentation>(a != b)</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="lessThan" type="binaryExprType" substitutionGroup="expr">
+  <xs:element name="lt" type="binaryExprType" substitutionGroup="expr">
     <xs:annotation>
       <xs:documentation>(a &lt; b)</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="lessThanOrEqual" type="binaryExprType" substitutionGroup="expr">
+  <xs:element name="leq" type="binaryExprType" substitutionGroup="expr">
     <xs:annotation>
       <xs:documentation>(a &lt;= b)</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="greaterThan" type="binaryExprType" substitutionGroup="expr">
+  <xs:element name="gt" type="binaryExprType" substitutionGroup="expr">
     <xs:annotation>
       <xs:documentation>(a &gt;= b)</xs:documentation>
     </xs:annotation>
   </xs:element>
-  <xs:element name="greaterThanOrEqual" type="binaryExprType" substitutionGroup="expr">
+  <xs:element name="geq" type="binaryExprType" substitutionGroup="expr">
     <xs:annotation>
       <xs:documentation>(a &gt;= b)</xs:documentation>
     </xs:annotation>
@@ -499,9 +499,12 @@
       <xs:sequence>
         <xs:group ref="exprGroup">
           <xs:annotation>
-            <xs:documentation>
-              body
-            </xs:documentation>
+            <xs:documentation>bool test</xs:documentation>
+          </xs:annotation>
+        </xs:group>
+        <xs:group ref="exprGroup" minOccurs="0" maxOccurs="1">
+          <xs:annotation>
+            <xs:documentation>body</xs:documentation>
           </xs:annotation>
         </xs:group>
       </xs:sequence>

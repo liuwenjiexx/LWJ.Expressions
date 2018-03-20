@@ -36,10 +36,10 @@
       </x:vars>
       <x:return>
         <x:if>
-          <x:lessThan>
+          <x:lt>
             <x:var>a</x:var>
             <x:var>b</x:var>
-          </x:lessThan>
+          </x:lt>
           <x:var>a</x:var>
           <x:else>
             <x:var>b</x:var>
@@ -55,10 +55,10 @@
       </x:vars>
       <x:return>
         <x:if>
-          <x:greaterThan>
+          <x:gt>
             <x:var>a</x:var>
             <x:var>b</x:var>
-          </x:greaterThan>
+          </x:gt>
           <x:var>a</x:var>
           <x:else>
             <x:var>b</x:var>
