@@ -506,9 +506,9 @@ namespace LWJ.Expressions.Xml
             }
 
             if (childs.Length == 1)
-                return IfThenElse(test, null, ifFalse);
+                return If(test, null, ifFalse);
 
-            return IfThenElse(test, ifTrue, ifFalse);
+            return If(test, ifTrue, ifFalse);
         }
 
 
@@ -576,11 +576,11 @@ namespace LWJ.Expressions.Xml
             if (exprs.Length == 2)
             {
                 body = exprs[1];
-                loop = Loop(Block(IfThen(Not(test), Break()), body));
+                loop = Loop(Block(If(Not(test), Break()), body));
             }
             else
             {
-                loop = Loop(Block(IfThen(Not(test), Break())));
+                loop = Loop(Block(If(Not(test), Break())));
             }
             return loop;
         }

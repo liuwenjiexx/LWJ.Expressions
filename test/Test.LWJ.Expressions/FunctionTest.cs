@@ -170,10 +170,10 @@ namespace Test.LWJ.Expressions
             var varB = Variable<int>("b");
             var expr = Block(
                 Function("min_", new ParameterExpression[] { varA, varB },
-                Return(IfThenElse(LessThanOrEqual(varA, varB), varA, varB)), typeof(int)),
+                Return(If(LessThanOrEqual(varA, varB), varA, varB)), typeof(int)),
 
                 Function("max_", new ParameterExpression[] { varA, varB },
-                Return(IfThenElse(GreaterThanOrEqual(varA, varB), varA, varB)), typeof(int)),
+                Return(If(GreaterThanOrEqual(varA, varB), varA, varB)), typeof(int)),
 
                 Function("clamp", new ParameterExpression[] { Variable<int>("value"), Variable<int>("min"), Variable<int>("max") },
                 Return(Call("min_", typeof(int), Call("max_", typeof(int), Variable<int>("value"), Variable<int>("min")), Variable<int>("max"))), typeof(int)),

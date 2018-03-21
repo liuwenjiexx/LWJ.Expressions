@@ -23,7 +23,7 @@ namespace Test.LWJ.Expressions
                 var n = Variable<int>("n");
                 var funcExpr = Function("sum", new ParameterExpression[] { n },
                         Return(
-                            IfThenElse(LessThanOrEqual(n, Constant(1)),
+                            If(LessThanOrEqual(n, Constant(1)),
                             Constant(1),
                             Add(n, Call("sum", n.ValueType, PostDecrement(n))))
                             )

@@ -16,7 +16,7 @@ namespace Test.LWJ.Expressions
             LoopExpression loop;
             var varI = Variable<int>("i");
             loop = Loop(Block(
-                IfThen(GreaterThanOrEqual(varI, Constant(1)), Break()),
+                If(GreaterThanOrEqual(varI, Constant(1)), Break()),
                 Assign(varI, Add(varI, Constant(1)))
                 ));
 
@@ -33,7 +33,7 @@ namespace Test.LWJ.Expressions
             LoopExpression loop;
             var varI = Variable<int>("i");
             loop = Loop(Block(
-                IfThen(GreaterThanOrEqual(varI, Constant(5)), Break()),
+                If(GreaterThanOrEqual(varI, Constant(5)), Break()),
                   PreIncrement(varI)
                 ));
 
@@ -55,7 +55,7 @@ namespace Test.LWJ.Expressions
                 },
                 Loop(
                     Block(
-                        IfThen(GreaterThanOrEqual(varI, Constant(5)), Break()),
+                        If(GreaterThanOrEqual(varI, Constant(5)), Break()),
                         Assign(varI, Add(varI, Constant(1))),
                         Assign(Variable<int>("n"), varI)
                 )));
@@ -74,7 +74,7 @@ namespace Test.LWJ.Expressions
             var varI = Variable<int>("i");
             Expression loop = Loop(
                 Block(
-                    IfThen(GreaterThanOrEqual(varI, Constant(count)), Break()),
+                    If(GreaterThanOrEqual(varI, Constant(count)), Break()),
                     Assign(varI, Add(varI, Constant(1)))
                 ));
 

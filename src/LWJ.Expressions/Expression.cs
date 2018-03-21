@@ -543,15 +543,15 @@ namespace LWJ.Expressions
             return new UnaryExpression(ExpressionType.Not, expression, method);
         }
 
-
-        public static ConditionalExpression IfThen(Expression test, Expression ifTrue) =>
+        public static ConditionalExpression If(Expression test, Expression ifTrue) =>
             new ConditionalExpression(test, ifTrue, null);
 
-        public static ConditionalExpression IfThenElse(Expression test, Expression ifTrue, Expression ifFalse)
+        public static ConditionalExpression If(Expression test, Expression ifTrue, Expression ifFalse)
         {
             if (test == null) throw new ArgumentNullException(nameof(test));
             return new ConditionalExpression(test, ifTrue, ifFalse);
         }
+
         public static SwitchExpression Switch(Expression testValue, IEnumerable<SwitchCase> cases)
             => Switch(testValue, null, cases);
         public static SwitchExpression Switch(Expression testValue, params SwitchCase[] cases)

@@ -244,14 +244,14 @@ namespace Test.LWJ.Expressions
         [TestMethod]
         public void IfThen_()
         {
-            Assert.AreEqual(1, Eval(IfThen(Constant(true), Constant(1))));
-            Assert.AreEqual(null, Eval(IfThen(Constant(false), Constant(1))));
+            Assert.AreEqual(1, Eval(If(Constant(true), Constant(1))));
+            Assert.AreEqual(null, Eval(If(Constant(false), Constant(1))));
         }
         [TestMethod]
         public void IfThenElse_()
         {
-            Assert.AreEqual(1, Eval(IfThenElse(Constant(true), Constant(1), Constant(2))));
-            Assert.AreEqual(2, Eval(IfThenElse(Constant(false), Constant(1), Constant(2))));
+            Assert.AreEqual(1, Eval(If(Constant(true), Constant(1), Constant(2))));
+            Assert.AreEqual(2, Eval(If(Constant(false), Constant(1), Constant(2))));
         }
 
         [TestMethod]
