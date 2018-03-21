@@ -71,7 +71,10 @@
     <Content Include="calculate\sum.xml" />
     <Content Include="exprs\call.xml" />
     <Content Include="exprs\custom.xml" />
-    <Content Include="exprs\loop.xml" />
+    <Content Include="exprs\for.xml" />
+    <Content Include="exprs\loop.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="exprs\named_type.xml" />
     <Content Include="exprs\if.xml" />
     <Content Include="exprs\or.xml" />

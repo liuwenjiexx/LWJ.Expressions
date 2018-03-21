@@ -4,23 +4,23 @@
             xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
 >
 
-  <expr name="loop" result="5" resultType="int32">
+  <expr name="loop" result="5" resultType="int">
     <!--
     int i=0;
     while(i<5)
       i++;    
     -->
     <x:vars>
-      <x:var  type="int32" >i</x:var>
+      <x:var  type="int" >i</x:var>
     </x:vars>
     <x:assign>
       <x:var>i</x:var>
-      <x:int32>0</x:int32>
+      <x:int>0</x:int>
     </x:assign>
     <x:loop>
       <x:lt>
         <x:var>i</x:var>
-        <x:int32>5</x:int32>
+        <x:int>5</x:int>
       </x:lt>
       <x:postIncrement>
         <x:var>i</x:var>
@@ -30,31 +30,31 @@
       <x:var>i</x:var>
     </x:return>
   </expr>
-  <expr name="loop2" result="5" resultType="int32">
+  <expr name="loop2" result="5" resultType="int">
     <!--
     int i=0;
     while(i++<5);
     -->
     <x:vars>
-      <x:var  type="int32" >i</x:var>
+      <x:var  type="int" >i</x:var>
     </x:vars>
     <x:assign>
       <x:var>i</x:var>
-      <x:int32>0</x:int32>
+      <x:int>0</x:int>
     </x:assign>
     <x:loop>
       <x:lt>
         <x:postIncrement>
           <x:var>i</x:var>
         </x:postIncrement>
-        <x:int32>5</x:int32>
+        <x:int>5</x:int>
       </x:lt>
     </x:loop>
     <x:return>
       <x:var>i</x:var>
     </x:return>
   </expr>
-  <expr name="loop3" result="5" resultType="int32">
+  <expr name="loop3" result="5" resultType="int">
     <!--
     int i=0;
     while(true){
@@ -64,11 +64,11 @@
     }
     -->
     <x:vars>
-      <x:var  type="int32" >i</x:var>
+      <x:var  type="int" >i</x:var>
     </x:vars>
     <x:assign>
       <x:var>i</x:var>
-      <x:int32>0</x:int32>
+      <x:int>0</x:int>
     </x:assign>
     <x:loop>
       <x:true/>
@@ -76,7 +76,7 @@
         <x:if>
           <x:geq>
             <x:var>i</x:var>
-            <x:int32>5</x:int32>
+            <x:int>5</x:int>
           </x:geq>
           <x:break/>
         </x:if>
@@ -89,5 +89,48 @@
       <x:var>i</x:var>
     </x:return>
   </expr>
+
+  <!--
+  foreach i in list1
+  {
+    log(i)
+  }
+  
+  <foreach var="i">
+    <var>list1</var>
+    <log><var>i</var></log>
+  </foreach>
+  
+  
+  foreach i in 1 .. 10
+  {
+    //var i
+  }
+  <foreach var="i">
+    <rang>
+      <int>1</int>
+      <int>10</int>
+    </rang>
+    <log><var>i</var></log>
+  </foreach>
+  
+  foreach i in 1 .. 2 .. 10
+  {
+    log(i)
+  }
+  <foreach var="i">
+    <rang>
+      <int>1</int>
+      <int>10</int>
+      <int>2</int>
+    </rang>
+    <log><var>i</var></log>
+  </foreach>
+  
+  
+  <for>
+  
+  
+  -->
 
 </expression>

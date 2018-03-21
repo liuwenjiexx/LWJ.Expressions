@@ -8,10 +8,10 @@
 
   <xs:element name="type" type="type"  substitutionGroup="expr">
   </xs:element>
-  <xs:element name="int32" type="xs:int" substitutionGroup="expr"/>
-  <xs:element name="int64" type="xs:long"  substitutionGroup="expr"/>
-  <xs:element name="float32" type="xs:float"  substitutionGroup="expr"/>
-  <xs:element name="float64" type="xs:double"  substitutionGroup="expr"/>
+  <xs:element name="int" type="xs:int" substitutionGroup="expr"/>
+  <xs:element name="long" type="xs:long"  substitutionGroup="expr"/>
+  <xs:element name="float" type="xs:float"  substitutionGroup="expr"/>
+  <xs:element name="double" type="xs:double"  substitutionGroup="expr"/>
   <xs:element name="bool"  substitutionGroup="expr">
     <xs:simpleType>
       <xs:restriction base="xs:string">

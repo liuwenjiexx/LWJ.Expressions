@@ -4,51 +4,51 @@
       xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
 >
 
-  <expr name="get_variable" result="1" resultType="int32">
+  <expr name="get_variable" result="1" resultType="int">
     <!--
     int a=1;
      a;
     -->
     <x:vars>
-      <x:var type="int32">a</x:var>
+      <x:var type="int">a</x:var>
     </x:vars>
     <x:assign>
       <x:var>a</x:var>
-      <x:int32 >1</x:int32>
+      <x:int >1</x:int>
     </x:assign>
     <x:return>
       <x:var>a</x:var>
     </x:return>
   </expr>
 
-  <expr name="set_variable" result="2" resultType="int32">
+  <expr name="set_variable" result="2" resultType="int">
     <!--
     int a;
     a=2;
     -->
     <x:vars>
-      <x:var  type="int32">a</x:var>
+      <x:var  type="int">a</x:var>
     </x:vars>
     <x:assign>
       <x:var>a</x:var>
-      <x:int32>2</x:int32>
+      <x:int>2</x:int>
     </x:assign>
     <x:return>
       <x:var>a</x:var>
     </x:return>
   </expr>
 
-  <expr name="block_variable_set" result="2" resultType="int32">
+  <expr name="block_variable_set" result="2" resultType="int">
     <x:vars>
-      <x:var type="int32" >result</x:var>
+      <x:var type="int" >result</x:var>
     </x:vars>
     <x:block>
       <x:vars>
-        <x:var type="int32"  >a</x:var>
+        <x:var type="int"  >a</x:var>
       </x:vars>
       <x:assign>        
         <x:var>a</x:var>
-        <x:int32>2</x:int32>
+        <x:int>2</x:int>
       </x:assign>
       <x:assign>
         <x:var>result</x:var>

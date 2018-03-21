@@ -5,7 +5,7 @@
       xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
 >
 
-  <test name="static min" result="1" resultType="int32">
+  <test name="static min" result="1" resultType="int">
     <my:hello>
       <x:string>Hello World</x:string>
     </my:hello>

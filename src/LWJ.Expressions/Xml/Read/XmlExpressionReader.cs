@@ -650,10 +650,10 @@ namespace LWJ.Expressions.Xml
 
 
             cachedReader["type"] = ReadType;
-            cachedReader["int32"] = ToReadTypedValue(typeof(int));
-            cachedReader["int64"] = ToReadTypedValue(typeof(long));
-            cachedReader["float32"] = ToReadTypedValue(typeof(float));
-            cachedReader["float64"] = ToReadTypedValue(typeof(double));
+            cachedReader["int"] = ToReadTypedValue(typeof(int));
+            cachedReader["long"] = ToReadTypedValue(typeof(long));
+            cachedReader["float"] = ToReadTypedValue(typeof(float));
+            cachedReader["double"] = ToReadTypedValue(typeof(double));
             cachedReader["bool"] = ToReadTypedValue(typeof(bool));
             cachedReader["string"] = (reader) => Constant(reader.ReadInnerText(), typeof(string));
             cachedReader["datetime"] = ToReadTypedValue(typeof(DateTime));
@@ -784,10 +784,10 @@ namespace LWJ.Expressions.Xml
 
             cachedTypeNames["bool"] = typeof(bool).FullName;
             cachedTypeNames["string"] = typeof(string).FullName;
-            cachedTypeNames["int32"] = typeof(int).FullName;
-            cachedTypeNames["int64"] = typeof(long).FullName;
-            cachedTypeNames["float32"] = typeof(float).FullName;
-            cachedTypeNames["float64"] = typeof(double).FullName;
+            cachedTypeNames["int"] = typeof(int).FullName;
+            cachedTypeNames["long"] = typeof(long).FullName;
+            cachedTypeNames["float"] = typeof(float).FullName;
+            cachedTypeNames["double"] = typeof(double).FullName;
             cachedTypeNames["datetime"] = typeof(DateTime).FullName;
             cachedTypeNames["type"] = typeof(Type).FullName;
 

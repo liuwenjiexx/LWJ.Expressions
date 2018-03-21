@@ -3,17 +3,17 @@
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd">
 
-  <x:func name="sum" returnType="int32">
+  <x:func name="sum" returnType="int">
     <x:vars>
-      <x:var type="int32">n</x:var>
+      <x:var type="int">n</x:var>
     </x:vars>
     <x:return>
       <x:if>
         <x:leq>
           <x:var>n</x:var>
-          <x:int32>1</x:int32>
+          <x:int>1</x:int>
         </x:leq>
-        <x:int32>1</x:int32>        
+        <x:int>1</x:int>        
         <x:else>
           <x:add>
             <x:var>n</x:var>

@@ -22,12 +22,8 @@ while running with --aot-only.*/
                 cachedTypeNames = new Dictionary<string, string>();
 
                 cachedTypeNames["int"] = typeof(int).FullName;
-                cachedTypeNames["int32"] = typeof(int).FullName;
-                cachedTypeNames["int64"] = typeof(long).FullName;
                 cachedTypeNames["long"] = typeof(long).FullName;
                 cachedTypeNames["float"] = typeof(float).FullName;
-                cachedTypeNames["float32"] = typeof(float).FullName;
-                cachedTypeNames["float64"] = typeof(double).FullName;
                 cachedTypeNames["double"] = typeof(double).FullName;
                 cachedTypeNames["bool"] = typeof(bool).FullName;
                 cachedTypeNames["boolean"] = typeof(bool).FullName;

@@ -36,77 +36,77 @@
       </x:if>
     </x:return>
   </expr>
-  <expr name="elseIf" result="2" resultType="int32">
+  <expr name="elseIf" result="2" resultType="int">
     <x:return>
       <x:if>
         <x:false/>
-        <x:int32>0</x:int32>
+        <x:int>0</x:int>
         <x:elseIf>
           <x:true/>
-          <x:int32>2</x:int32>
+          <x:int>2</x:int>
           <x:else>
-            <x:int32>3</x:int32>
+            <x:int>3</x:int>
           </x:else>
         </x:elseIf>
         <x:else>
-          <x:int32>1</x:int32>
+          <x:int>1</x:int>
         </x:else>
       </x:if>
     </x:return>
   </expr>
-  <expr name="elseIf2" result="1" resultType="int32">
+  <expr name="elseIf2" result="1" resultType="int">
     <x:return>
       <x:if>
         <x:false/>
-        <x:int32>0</x:int32>
+        <x:int>0</x:int>
         <x:elseIf>
           <x:false/>
-          <x:int32>2</x:int32>
+          <x:int>2</x:int>
           <x:else>
-            <x:int32>3</x:int32>
+            <x:int>3</x:int>
           </x:else>
         </x:elseIf>
         <x:else>
-          <x:int32>1</x:int32>
+          <x:int>1</x:int>
         </x:else>
       </x:if>
     </x:return>
   </expr>
-  <expr name="elseIf3" result="4" resultType="int32">
+  <expr name="elseIf3" result="4" resultType="int">
     <x:return>
       <x:if>
         <x:false/>
-        <x:int32>0</x:int32>
+        <x:int>0</x:int>
         <x:elseIf>
           <x:false/>
-          <x:int32>2</x:int32>
+          <x:int>2</x:int>
           <x:else>
-            <x:int32>3</x:int32>
+            <x:int>3</x:int>
           </x:else>
         </x:elseIf>
         <x:elseIf>
           <x:true/>
-          <x:int32>4</x:int32>
+          <x:int>4</x:int>
         </x:elseIf>
         <x:else>
-          <x:int32>1</x:int32>
+          <x:int>1</x:int>
         </x:else>
       </x:if>
     </x:return>
   </expr>
-  <expr name="nest_if" result="3" resultType="int32">
+  <expr name="nest_if" result="3" resultType="int">
     <x:return>
       <x:if>
         <x:true/>
         <x:if>
           <x:false/>
-          <x:int32>2</x:int32>
+          <x:int>2</x:int>
           <x:else>
-            <x:int32>3</x:int32>
+            <x:int>3</x:int>
           </x:else>
         </x:if>
         <x:else>
-          <x:int32>1</x:int32>
+          <x:int>1</x:int>
         </x:else>
       </x:if>
     </x:return>

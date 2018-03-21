@@ -529,10 +529,10 @@ namespace LWJ.Expressions.Xml
             cachedTypeNames = new Dictionary<Type, string>();
 
 
-            cachedTypeNames[typeof(int)] = "int32";
-            cachedTypeNames[typeof(long)] = "int64";
-            cachedTypeNames[typeof(float)] = "float32";
-            cachedTypeNames[typeof(double)] = "float64";
+            cachedTypeNames[typeof(int)] = "int";
+            cachedTypeNames[typeof(long)] = "long";
+            cachedTypeNames[typeof(float)] = "float";
+            cachedTypeNames[typeof(double)] = "double";
             cachedTypeNames[typeof(bool)] = "bool";
             cachedTypeNames[typeof(string)] = "string";
             cachedTypeNames[typeof(DateTime)] = "datetime";

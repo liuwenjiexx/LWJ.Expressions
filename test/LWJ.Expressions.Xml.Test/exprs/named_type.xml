@@ -21,22 +21,22 @@
   </expr>
   <expr name="named_type_int32" result="1" resultType="int">
     <x:return>
-      <x:int32>1</x:int32>
+      <x:int>1</x:int>
     </x:return>
   </expr>
   <expr name="named_type_int64" result="1" resultType="long">
     <x:return>
-      <x:int64>1</x:int64>
+      <x:long>1</x:long>
     </x:return>
   </expr>
   <expr name="named_type_float32" result="1.1" resultType="float">
     <x:return>
-      <x:float32>1.1</x:float32>
+      <x:float>1.1</x:float>
     </x:return>
   </expr>
   <expr name="named_type_float64" result="1.1" resultType="double">
     <x:return>
-      <x:float64>1.1</x:float64>
+      <x:double>1.1</x:double>
     </x:return>
   </expr>
   <expr name="named_type_bool_true" result="true" resultType="bool">
@@ -64,26 +64,26 @@
       <x:datetime>2017-01-02T03:04:05</x:datetime>
     </x:return>
   </expr>
-  <expr name="multiply_int32_float32" result="0.5" resultType="float32" >
+  <expr name="multiply_int32_float32" result="0.5" resultType="float" >
     <x:return>
       <x:multiply>
-        <x:float32>1</x:float32>
-        <x:float32>0.5</x:float32>
+        <x:float>1</x:float>
+        <x:float>0.5</x:float>
       </x:multiply>
     </x:return>
   </expr>
-  <expr name="type_convert_int32_float32" result="1" resultType="float32" >
+  <expr name="type_convert_int32_float32" result="1" resultType="float" >
     <x:return>
       <x:convert>
-        <x:int32>1</x:int32>
-        <x:type>float32</x:type>
+        <x:int>1</x:int>
+        <x:type>float</x:type>
       </x:convert>
     </x:return>
   </expr>
   <!--<expr name="type_as_int32_float32" result="1" resultType="float32" >
     <x:return>
       <x:as>
-        <x:int32>1</x:int32>
+        <x:int>1</x:int>
         <x:type>float32</x:type>
       </x:as>
     </x:return>
@@ -91,15 +91,15 @@
   <expr name="type_is_int32" result="1" resultType="float32" >
     <x:return>
       <x:is>
-        <x:int32>1</x:int32>
-        <x:type>int32</x:type>
+        <x:int>1</x:int>
+        <x:type>int</x:type>
       </x:is>
     </x:return>
   </expr>-->
   <!--<expr name="convert_int32_float32" result="0.5" resultType="float32" >
     <x:return>
       <x:float32>
-        <x:int32>1</x:int32>
+        <x:int>1</x:int>
       </x:float32>
     </x:return>
   </expr>-->

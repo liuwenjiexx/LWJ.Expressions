@@ -4,11 +4,11 @@
       xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
 >
 
-  <test name="add" result="3" resultType="int32">
-    <x:func name="add" returnType="int32">
+  <test name="add" result="3" resultType="int">
+    <x:func name="add" returnType="int">
       <x:vars>
-        <x:var type="int32">a</x:var>
-        <x:var type="int32">b</x:var>
+        <x:var type="int">a</x:var>
+        <x:var type="int">b</x:var>
       </x:vars>
       <x:return>
         <x:add>
@@ -20,19 +20,19 @@
     <x:return>
       <x:call>
         <x:var>add</x:var>
-        <x:int32>1</x:int32>
-        <x:int32>2</x:int32>
+        <x:int>1</x:int>
+        <x:int>2</x:int>
       </x:call>
     </x:return>
   </test>
 
 
-  <test name="clamp"  result="10" resultType="int32">
+  <test name="clamp"  result="10" resultType="int">
 
-    <x:func name="min_" returnType="int32">
+    <x:func name="min_" returnType="int">
       <x:vars>
-        <x:var type="int32">a</x:var>
-        <x:var type="int32">b</x:var>
+        <x:var type="int">a</x:var>
+        <x:var type="int">b</x:var>
       </x:vars>
       <x:return>
         <x:if>
@@ -48,10 +48,10 @@
       </x:return>
     </x:func>
 
-    <x:func name="max_" returnType="int32">
+    <x:func name="max_" returnType="int">
       <x:vars>
-        <x:var type="int32">a</x:var>
-        <x:var type="int32">b</x:var>
+        <x:var type="int">a</x:var>
+        <x:var type="int">b</x:var>
       </x:vars>
       <x:return>
         <x:if>
@@ -67,11 +67,11 @@
       </x:return>
     </x:func>
 
-    <x:func name="clamp" returnType="int32">
+    <x:func name="clamp" returnType="int">
       <x:vars>
-        <x:var type="int32">value</x:var>
-        <x:var type="int32">min</x:var>
-        <x:var type="int32">max</x:var>
+        <x:var type="int">value</x:var>
+        <x:var type="int">min</x:var>
+        <x:var type="int">max</x:var>
       </x:vars>
       <x:return>
         <x:call>
@@ -88,33 +88,33 @@
     <x:return>
       <x:call>
         <x:var>clamp</x:var>
-        <x:int32>100</x:int32>
-        <x:int32>1</x:int32>
-        <x:int32>10</x:int32>
+        <x:int>100</x:int>
+        <x:int>1</x:int>
+        <x:int>10</x:int>
       </x:call>
     </x:return>
   </test>
 
 
-  <test name="callAnonymous" result="1" resultType="int32">
+  <test name="callAnonymous" result="1" resultType="int">
     <x:return>
       <x:call>
-        <x:func returnType="int32">
+        <x:func returnType="int">
           <x:return>
-            <x:int32>1</x:int32>
+            <x:int>1</x:int>
           </x:return>
         </x:func>
       </x:call>
     </x:return>
   </test>
 
-  <test name="callAnonymous_Arg2" result="3" resultType="int32">
+  <test name="callAnonymous_Arg2" result="3" resultType="int">
     <x:return>
       <x:call>
-        <x:func returnType="int32">
+        <x:func returnType="int">
           <x:vars>
-            <x:var type="int32">a</x:var>
-            <x:var type="int32">b</x:var>
+            <x:var type="int">a</x:var>
+            <x:var type="int">b</x:var>
           </x:vars>
           <x:return>
             <x:add>
@@ -123,8 +123,8 @@
             </x:add>
           </x:return>
         </x:func>
-        <x:int32>1</x:int32>
-        <x:int32>2</x:int32>
+        <x:int>1</x:int>
+        <x:int>2</x:int>
       </x:call>
     </x:return>
   </test>

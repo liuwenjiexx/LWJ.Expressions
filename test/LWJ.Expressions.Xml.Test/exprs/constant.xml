@@ -7,7 +7,7 @@
   <expr name="constant_int32" result="1" resultType="int">
 
     <x:return>
-      <x:constant type="int32">1</x:constant>
+      <x:constant type="int">1</x:constant>
     </x:return>
   </expr>
   <expr name="constant_int64" result="1" resultType="long">
