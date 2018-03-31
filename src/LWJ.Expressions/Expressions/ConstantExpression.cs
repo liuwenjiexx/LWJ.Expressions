@@ -14,23 +14,29 @@ namespace LWJ.Expressions
     public class ConstantExpression : Expression
     {
         private object value;
-         
+
 
         internal ConstantExpression(object value, Type valueType)
             : base(ExpressionType.Constant, valueType)
         {
-            this.value = value; 
+            this.value = value;
         }
 
         public object Value => value;
 
 
         public override CompiledDelegate Compile(CompileContext ctx)
-        {            
-            var value = this.value;
-            return (invoke) => value;
+        {
+            return _Compile(ctx, value);
         }
-          
+
+        private static CompiledDelegate _Compile(CompileContext ctx, object value)
+        {
+            return (invoke) =>
+            {
+                return value;
+            };
+        }
 
     }
 

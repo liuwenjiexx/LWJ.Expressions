@@ -143,7 +143,7 @@ namespace Test.LWJ.Expressions
 
 
 
-        private int runCount = 100000;
+        private int runCount = 1000000;
         [TestMethod]
         public void Time_Add()
         {
