@@ -36,9 +36,9 @@ namespace LWJ.Expressions.Script
                       }
                   };
                 addKeyword(".", 0);
-                addKeyword("(", 1);
-                addKeyword("=", 1);
-                addKeyword(",", 1);
+                addKeyword("(", 0);
+                addKeyword("=", 0);
+                addKeyword(",", 0);
                 addKeyword("||", 2);
                 addKeyword("&&", 2);
                 addKeyword("==", 3);
@@ -186,25 +186,23 @@ namespace LWJ.Expressions.Script
                     right = PopData(s1);
                     left = PopData(s1);
                     return Expression.Assign((AccessableExpression)left, right);
-                /*  case ",":
-                      right = PopData(s1);
-                      left = PopData(s1);
+                case ",":
+                    right = PopData(s1);
+                    left = PopData(s1);
 
-                      BlockExpression join = right as BlockExpression;
+                    JoinExpression join = right as JoinExpression;
 
-                      if (join == null)
-                      {
-                          join = new BlockExpression();
-                          join.List.Add(left);
-                          join.List.Add(right);
-                          BlockExpression.
-                      }
-                      else
-                      {
-                          join.List.Insert(0, left);
-                      }
-                      return join;
-                      break;*/
+                    if (join == null)
+                    {
+                        join = new JoinExpression();
+                        join.List.Add(left);
+                        join.List.Add(right);
+                    }
+                    else
+                    {
+                        join.List.Insert(0, left);
+                    }
+                    return join;
                 case ")":
                     while (s2.Count > 0 && s2.Peek().Keyword != "(")
                     {
@@ -264,7 +262,7 @@ namespace LWJ.Expressions.Script
 
             if (ch < 128)
             {
-                return IsStartChar(ch) || IsDigit(ch);
+                return IsStartChar(ch) || ('0' <= ch && ch <= '9');
             }
             return false;
         }
@@ -443,28 +441,46 @@ namespace LWJ.Expressions.Script
 
                         s1.Pop();
                         bool isGroup = true;
-                        /*
-                        if (s1.Count > 0 && s1.Peek().ExpressionType == ExpressionType.Data)
+
+                        if (s1.Count > 0 && (s1.Peek().ExpressionType == ExpressionType.Member || s1.Peek().ExpressionType == ExpressionType.Variable))
                         {
-                            var d = (DataExpression)s1.Peek();
-                            if (d.Arguments == null)
+                            Expression[] args = null;
+                            if (contentNode == null)
                             {
-                                if (contentNode == null)
-                                {
-                                    d.Arguments = new Expression[0];
-                                }
-                                else if (contentNode.NodeType == ExpressionType.Join)
-                                {
-                                    d.Arguments = ((JoinExpression)contentNode).List.ToArray();
-                                }
-                                else
-                                {
-                                    d.Arguments = new Expression[] { contentNode };
-                                }
-                                isGroup = false;
+                                args = null;
                             }
+                            else if (contentNode is JoinExpression)
+                            {
+                                args = ((JoinExpression)contentNode).List.ToArray();
+                            }
+                            else
+                            {
+                                args = new Expression[] { contentNode };
+                            }
+                            var d = s1.Peek() as MemberExpression;
+                            if (d != null)
+                            {
+                                if (d.Member.MemberType == MemberTypes.Method)
+                                {
+                                    s1.Pop();
+                                    s1.Push(Expression.Call(d.Instance, d.Member.Name, args));
+
+                                }
+                            }
+                            else
+                            {
+                                var p = s1.Peek() as ParameterExpression;
+
+                                if (p.ValueType == typeof(MethodInfo))
+                                {
+                                    MethodInfo mInfo = ctx.Context.GetVariable(p.Name) as MethodInfo;
+                                    s1.Pop();
+                                    s1.Push(Expression.Call(mInfo, args));
+                                }
+                            }
+                            isGroup = false;
                         }
-                        */
+
 
                         if (isGroup)
                         {
@@ -481,7 +497,7 @@ namespace LWJ.Expressions.Script
                         if (kw.Keyword == "(")
                         {
                             s1.Push(Expression.Group(Expression.Null));
-                            //handle call
+
                         }
 
                         while (s2.Count > 0 && kw.Priority != 0 &&/* s2.Peek().Priority != 0 &&*/ s2.Peek().Priority > kw.Priority)
@@ -509,27 +525,27 @@ namespace LWJ.Expressions.Script
                             //    s1.Push(Expression.Undefined);
                             //    continue;
                     }
-                    long l;
-                    if (long.TryParse(part, out l))
+
+                    if (IsDigit(part[0]))
                     {
-                        s1.Push(Expression.Constant(l));
-                        continue;
-                    }
-                    double f;
-                    if (double.TryParse(part, out f))
-                    {
-                        s1.Push(Expression.Constant(f));
-                        continue;
+                        long l;
+                        if (long.TryParse(part, out l))
+                        {
+                            s1.Push(Expression.Constant(l));
+                            continue;
+                        }
+                        double f;
+                        if (double.TryParse(part, out f))
+                        {
+                            s1.Push(Expression.Constant(f));
+                            continue;
+                        }
                     }
 
-
-                    // s1.Push(new DataExpression(part));
 
                     if (s2.Count > 0 && s2.Peek().Keyword == ".")
                     {
-                        //member
-                        // if (s1.Count > 0 && s1.Peek().ExpressionType == ExpressionType.Variable)
-                        // {
+
                         var variable = s1.Pop();
                         var member = GetMember(variable, null, part, BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.GetField | BindingFlags.GetProperty);
                         if (member == null)
@@ -542,11 +558,7 @@ namespace LWJ.Expressions.Script
                         {
                             s1.Push(Expression.PropertyOrField(variable, member.Name));
                         }
-                        //}
-                        //else
-                        //{
-                        //    throw new Exception("member expr error: " + part);
-                        //}
+
                         s2.Pop();
                     }
 
@@ -622,6 +634,19 @@ namespace LWJ.Expressions.Script
 
 
 
+        class JoinExpression : Expression
+        {
+            public List<Expression> List = new List<Expression>();
+            public JoinExpression()
+            {
+
+            }
+            public override CompiledDelegate Compile(CompileContext ctx)
+            {
+                throw new NotImplementedException();
+            }
+        }
 
     }
+
 }
