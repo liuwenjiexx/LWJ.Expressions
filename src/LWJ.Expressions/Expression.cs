@@ -460,7 +460,20 @@ namespace LWJ.Expressions
             return new ＭemberExpression(instance, type, mInfo, null);
         }
 
+        public static ＭemberExpression Member(Expression instance, Type type, string memberName)
+        {
+            if (memberName == null) throw new ArgumentNullException(nameof(memberName));
 
+            Type objType = type;
+            if (objType == null)
+                objType = instance.ValueType;
+            if (objType == null)
+                throw new ArgumentNullException(nameof(type));
+            var mInfos = objType.GetMember(memberName);
+            if (mInfos == null || mInfos.Length == 0) throw new MissingMemberException(type.FullName, memberName);
+
+            return new ＭemberExpression(instance, type, mInfos[0], null);
+        }
 
         public static AssignExpression Assign(AccessableExpression left, Expression right)
         {
@@ -709,10 +722,15 @@ namespace LWJ.Expressions
         {
             return CurrentOrDefault.GetOperatorInfo(operatorType, operType1, operType2).method;
         }
+        public static GroupExpression Group(Expression expr)
+        {
+            return new GroupExpression(expr);
+        }
     }
 
     public delegate object CompiledDelegate(InvocationContext invoke);
 
     public delegate object InvocationDelegate(IExpressionContext ctx);
+
 
 }

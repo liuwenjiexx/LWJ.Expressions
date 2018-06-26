@@ -50,6 +50,7 @@
     <Compile Include="Expressions\AddAssignExpression.cs" />
     <Compile Include="Expressions\FunctionCallExpression.cs" />
     <Compile Include="Expressions\FunctionExpression.cs" />
+    <Compile Include="Expressions\GroupExpression.cs" />
     <Compile Include="Expressions\LoopExpression.cs" />
     <Compile Include="Expressions\GotoExpression.cs" />
     <Compile Include="Expressions\SwitchExpression.cs" />
@@ -88,6 +89,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource1.resx</DependentUpon>
     </Compile>
+    <Compile Include="Script\ScriptExpressionReader.cs" />
     <Compile Include="Tuple`2.cs" />
     <Compile Include="Unity\EqualityComparers.cs" />
     <Compile Include="VariableInfo.cs" />
@@ -119,6 +121,5 @@
       <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,7 +3,13 @@
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="urn:schema-lwj:expression ../../../resources/lwj.expr.xsd"
 >
-
+  <!--
+ int add(int a,int b){
+   return a+b;
+ }
+ 
+ add(1,2);
+    -->
   <test name="add" result="3" resultType="int">
     <x:func name="add" returnType="int">
       <x:vars>
@@ -28,7 +34,11 @@
 
 
   <test name="clamp"  result="10" resultType="int">
-
+    <!--
+ int min_(int a,int b){
+   return a<b?a:b;
+ }
+    -->
     <x:func name="min_" returnType="int">
       <x:vars>
         <x:var type="int">a</x:var>
@@ -47,7 +57,11 @@
         </x:if>
       </x:return>
     </x:func>
-
+    <!--
+ int max_(int a,int b){
+   return a>b?a:b;
+ }
+    -->
     <x:func name="max_" returnType="int">
       <x:vars>
         <x:var type="int">a</x:var>
@@ -66,7 +80,12 @@
         </x:if>
       </x:return>
     </x:func>
-
+    <!--
+ int clamp(int value, int min,int max){
+   return max_(min_(value,max),min);
+ }
+ clamp(100,1,10);
+    -->
     <x:func name="clamp" returnType="int">
       <x:vars>
         <x:var type="int">value</x:var>

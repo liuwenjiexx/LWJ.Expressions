@@ -232,7 +232,9 @@ namespace LWJ.Expressions
         //Quote,
         //Property,
         //Data,
-        //GroupStart,
+
+        Group = 100,
+        //Join = 101,
 
 
     }

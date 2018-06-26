@@ -167,9 +167,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static double Multiply(int a, double b) => a * b;
         [OverrideOperator]
-        public static float Multiply(long a, int b) => a * b;
+        public static long Multiply(long a, int b) => a * b;
         [OverrideOperator]
-        public static float Multiply(long a, long b) => a * b;
+        public static long Multiply(long a, long b) => a * b;
         [OverrideOperator]
         public static float Multiply(long a, float b) => a * b;
         [OverrideOperator]
