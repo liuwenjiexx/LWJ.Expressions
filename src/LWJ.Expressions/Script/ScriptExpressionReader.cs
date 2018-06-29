@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace LWJ.Expressions.Script
 {
@@ -262,6 +263,8 @@ namespace LWJ.Expressions.Script
 
             if (ch < 128)
             {
+                if (ch == '"')
+                    return false;
                 return IsStartChar(ch) || ('0' <= ch && ch <= '9');
             }
             return false;
@@ -275,7 +278,7 @@ namespace LWJ.Expressions.Script
             return ch == ' ' || ch == '\r' || ch == '\n';
         }
 
-        IEnumerable<string> ToParts(string expr)
+        IEnumerable<object> ToParts(string expr)
         {
             if (string.IsNullOrEmpty(expr))
                 yield break;
@@ -288,6 +291,8 @@ namespace LWJ.Expressions.Script
             string keyword = null;
             bool isWord = false;
             bool isDigit = false;
+
+            bool isString = false;
             for (int i = 0; i < len; i++)
             {
                 ch = expr[i];
@@ -301,9 +306,16 @@ namespace LWJ.Expressions.Script
                         count = 0;
                         continue;
                     }
+                    isString = false;
                     isWord = false;
                     isDigit = false;
-                    if (IsStartChar(ch))
+                    if (ch == '"')
+                    {
+                        isString = true;
+                        count = 0;
+                        continue;
+                    }
+                    else if (IsStartChar(ch))
                     {
                         isWord = true;
                     }
@@ -338,7 +350,19 @@ namespace LWJ.Expressions.Script
                 }
                 else
                 {
-                    if (isDigit)
+                    if (isString)
+                    {
+                        if (ch != '"')
+                        {
+                            count++;
+                            continue;
+                        }
+                        yield return Expression.Constant<string>(expr.Substring(offset + 1, count));
+                        offset = i + 1;
+                        isString = false;
+                        continue;
+                    }
+                    else if (isDigit)
                     {
                         if (IsDigit(ch))
                         {
@@ -358,7 +382,7 @@ namespace LWJ.Expressions.Script
                     else
                     {
 
-                        if (!IsStartChar(ch) && !IsDigit(ch))
+                        if (!IsStartChar(ch) && !IsDigit(ch) && ch != '"')
                         {
                             count++;
                             continue;
@@ -410,8 +434,14 @@ namespace LWJ.Expressions.Script
             PushScope(ctxs);
 
 
-            foreach (var part in ToParts(expr))
+            foreach (var part1 in ToParts(expr))
             {
+                if (part1 is Expression)
+                {
+                    s1.Push((Expression)part1);
+                    continue;
+                }
+                string part = part1 as string;
                 Console.WriteLine("part:" + part);
                 if (kws.ContainsKey(part))
                 {

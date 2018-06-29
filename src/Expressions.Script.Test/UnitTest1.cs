@@ -9,6 +9,14 @@ namespace LWJ.Expressions.Script.Test
     public class UnitTest1
     {
         [TestMethod]
+        public void String()
+        {
+            CheckExpr("\"\"", "");
+            CheckExpr("\"abc\"", "abc");
+
+        }
+
+        [TestMethod]
         public void Number()
         {
             CheckExpr("1", 1L);
@@ -52,6 +60,51 @@ namespace LWJ.Expressions.Script.Test
             CheckExpr("1!=1", false);
         }
 
+        [TestMethod]
+        public void Logic2()
+        {
+            CheckExpr("true||false", true);
+            CheckExpr("true||true", true);
+            CheckExpr("false||true", true);
+            CheckExpr("false||false", false);
+
+            CheckExpr("true||false||false", true);
+            CheckExpr("false||true||false", true);
+            CheckExpr("false||false||true", true);
+            CheckExpr("false||false||false", false);
+
+            CheckExpr("true&&false", false);
+            CheckExpr("true&&true", true);
+            CheckExpr("false&&true", false);
+            CheckExpr("false&&false", false);
+
+            CheckExpr("true&&false&&false", false);
+            CheckExpr("false&&true&&false", false);
+            CheckExpr("false&&false&&false", false);
+
+        }
+        [TestMethod]
+        public void Logic3()
+        {
+            CheckExpr("false||1", 1L);
+            CheckExpr("false||0||1", 1L);
+
+            CheckExpr("0||1", 1L);
+            CheckExpr("1||0", 1L);
+            CheckExpr("0||0", 0L);
+            CheckExpr("\"\"||1", 1L);
+            CheckExpr("0||\"abc\"", "abc");
+
+            CheckExpr("true&&1", 1L);
+            CheckExpr("true&&1&&2", 2L);
+            CheckExpr("0&&1", 0L);
+            CheckExpr("1&&0", 0L);
+            CheckExpr("0&&0", 0L);
+            CheckExpr("\"\"&&1", "");
+            CheckExpr("0&&\"abc\"", 0L);
+            CheckExpr("1&&\"abc\"", "abc");
+
+        }
         [TestMethod]
         public void Group()
         {
@@ -107,7 +160,7 @@ namespace LWJ.Expressions.Script.Test
             ExpressionContext ctx = new ExpressionContext();
             ctx.AddVariable<MethodInfo>("Static_Add");
             var mInfo = typeof(MyClass).GetMethod("Static_Add", BindingFlags.Public | BindingFlags.Static);
-         
+
             ctx.SetVariable("Static_Add", mInfo);
             CheckExpr("Static_Add(1,2)", 3L, ctx);
 
