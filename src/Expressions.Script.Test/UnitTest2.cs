@@ -14,8 +14,16 @@ namespace LWJ.Expressions.Script.Test
             AddMember(ctx, typeof(Math));
 
             CheckExpr("max(1,2)", 2D, ctx);
+            CheckExpr("max(-1,-2)", -1D, ctx);
+
             CheckExpr("PI", Math.PI, ctx);
             CheckExpr("PI>1", true, ctx);
+
+            CheckExpr("min(max(5,1),10)", 5D, ctx);
+            CheckExpr("min(10,max(5,1))", 5D, ctx);
+
+            CheckExpr("min(10,max(-5,-10))", -5D, ctx);
+
         }
 
         static void AddMember(ExpressionContext ctx, Type type)

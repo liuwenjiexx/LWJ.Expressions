@@ -31,7 +31,7 @@ namespace LWJ.Expressions.Script.Test
         [TestMethod]
         public void Arithmetic()
         {
-            CheckExpr("1+2", 3d);
+            CheckExpr("1+2", 3L);
             CheckExpr("2*3", 6L);
             CheckExpr("4/2", 2d);
             CheckExpr("3%2", 1d);
@@ -39,8 +39,8 @@ namespace LWJ.Expressions.Script.Test
         [TestMethod]
         public void Priority()
         {
-            CheckExpr("1+2*3", 7d);
-            CheckExpr("1*2+3", 5D);
+            CheckExpr("1+2*3", 7L);
+            CheckExpr("1*2+3", 5L);
         }
 
         [TestMethod]
@@ -109,13 +109,24 @@ namespace LWJ.Expressions.Script.Test
         public void Group()
         {
             CheckExpr("(1)", 1L);
-            CheckExpr("(-1)", -1L);
-            CheckExpr("(1+2)", 3D);
-            CheckExpr("(1+2)*3", 9D);
-            CheckExpr("1+(2*3)", 7D);
-            CheckExpr("3*(1+2)", 9D);
+            CheckExpr("(1+2)", 3L);
+            CheckExpr("(1-2)", -1L);
+            CheckExpr("(1+2)*3", 9L);
+            CheckExpr("1+(2*3)", 7L);
+            CheckExpr("3*(1+2)", 9L);
+            CheckExpr("1*(2+(3-4))", 1L);
         }
 
+        [TestMethod]
+        public void Negate()
+        {
+            CheckExpr("-1", -1L);
+            CheckExpr("--1", 1L);
+            CheckExpr("---1", -1L);
+            CheckExpr("1+-1", -0L);
+            CheckExpr("(-1)", -1L);
+            CheckExpr("(1-2)-3", -4L);
+        }
 
         [TestMethod]
         public void Member()
@@ -151,7 +162,7 @@ namespace LWJ.Expressions.Script.Test
             CheckExpr("obj.Add(1,2)", 3L, ctx);
             CheckExpr("obj.Add_ABC(1,2,3)", 6L, ctx);
             //  CheckExpr("obj.Sum_Params(1,2,3)", 6L, ctx);
-            CheckExpr("obj.Add(1,2)+obj.Add(3,4)", 10D, ctx);
+            CheckExpr("obj.Add(1,2)+obj.Add(3,4)", 10L, ctx);
         }
 
         [TestMethod]

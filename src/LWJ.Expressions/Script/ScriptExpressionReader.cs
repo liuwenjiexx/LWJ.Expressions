@@ -116,11 +116,11 @@ namespace LWJ.Expressions.Script
         //    return kwSingle.Contains(ch);
         //}
 
-        private Expression GetExpr(string kw, Stack<Expression> s1, Stack<KeywordInfo> s2)
+        private Expression GetExpr(PartInfo kw, Stack<Expression> s1, Stack<PartInfo> s2)
         {
             Expression left;
             Expression right;
-            switch (kw)
+            switch (kw.keywordInfo.Keyword)
             {
                 case "+":
                     right = PopData(s1);
@@ -128,16 +128,13 @@ namespace LWJ.Expressions.Script
                     return Expression.Add(left, right);
                 case "-":
                     right = PopData(s1);
-                    if (s2.Count > 0 && s2.Peek().Keyword == "(")
+                    if (kw.segment.Prev == null || (kw.segment.Prev.IsOper && kw.segment.Prev.Expr != ")" && kw.segment.Prev.Index + 1 == kw.segment.Index))
+                    // if (s2.Count > 0 && s2.Peek().Keyword == "(")
                     {
-                        left = null;
-                    }
-                    else
-                    {
-                        left = PopData(s1);
-                    }
-                    if (left == null)
                         return Expression.Negate(right);
+                    }
+
+                    left = PopData(s1);
                     return Expression.Subtract(left, right);
                 case "*":
                     right = PopData(s1);
@@ -187,27 +184,27 @@ namespace LWJ.Expressions.Script
                     right = PopData(s1);
                     left = PopData(s1);
                     return Expression.Assign((AccessableExpression)left, right);
-                case ",":
-                    right = PopData(s1);
-                    left = PopData(s1);
+                /*  case ",":
+                      right = PopData(s1);
+                      left = PopData(s1);
 
-                    JoinExpression join = right as JoinExpression;
+                      JoinExpression join = right as JoinExpression;
 
-                    if (join == null)
-                    {
-                        join = new JoinExpression();
-                        join.List.Add(left);
-                        join.List.Add(right);
-                    }
-                    else
-                    {
-                        join.List.Insert(0, left);
-                    }
-                    return join;
+                      if (join == null)
+                      {
+                          join = new JoinExpression();
+                          join.List.Add(left);
+                          join.List.Add(right);
+                      }
+                      else
+                      {
+                          join.List.Insert(0, left);
+                      }
+                      return join;*/
                 case ")":
-                    while (s2.Count > 0 && s2.Peek().Keyword != "(")
+                    while (s2.Count > 0 && s2.Peek().keywordInfo.Keyword != "(")
                     {
-                        s1.Push(GetExpr(s2.Pop().Keyword, s1, s2));
+                        s1.Push(GetExpr(s2.Pop(), s1, s2));
                     }
 
                     if (s2.Count <= 0)
@@ -278,11 +275,11 @@ namespace LWJ.Expressions.Script
             return ch == ' ' || ch == '\r' || ch == '\n';
         }
 
-        IEnumerable<object> ToParts(string expr)
+        IEnumerable<ExpressionSegment> ToParts(string expr)
         {
             if (string.IsNullOrEmpty(expr))
                 yield break;
-            // List<string> parts = new List<string>();
+
             int len = expr.Length;
             char ch;
             int offset = 0;
@@ -291,8 +288,11 @@ namespace LWJ.Expressions.Script
             string keyword = null;
             bool isWord = false;
             bool isDigit = false;
-
+            int index = 0;
             bool isString = false;
+
+            ExpressionSegment prev = null;
+            ExpressionSegment current;
             for (int i = 0; i < len; i++)
             {
                 ch = expr[i];
@@ -331,16 +331,41 @@ namespace LWJ.Expressions.Script
                     {
                         if (kws.ContainsKey(ch.ToString()))
                         {
+                            bool isOper = true;
+                            //if (ch == '(' || ch == ')')
+                            //    isOper = false;
                             if (i < len - 1 && kws.ContainsKey(ch.ToString() + expr[i + 1]))
                             {
-                                yield return ch.ToString() + expr[i + 1];
+                                current = new ExpressionSegment()
+                                {
+                                    Index = index++,
+                                    Expr = ch.ToString() + expr[i + 1],
+                                    Offset = offset,
+                                    Length = 2,
+                                    IsKeyword = true,
+                                    IsOper = isOper,
+                                    Prev = prev
+                                };
+                                yield return current;
+                                prev = current;
                                 i++;
                                 offset = i + 1;
 
                             }
                             else
                             {
-                                yield return ch.ToString();
+                                current = new ExpressionSegment()
+                                {
+                                    Index = index++,
+                                    Expr = ch.ToString(),
+                                    Offset = offset,
+                                    Length = 1,
+                                    IsKeyword = true,
+                                    IsOper = isOper,
+                                    Prev = prev
+                                };
+                                yield return current;
+                                prev = current;
                                 offset = i + 1;
                             }
                         }
@@ -357,7 +382,17 @@ namespace LWJ.Expressions.Script
                             count++;
                             continue;
                         }
-                        yield return Expression.Constant<string>(expr.Substring(offset + 1, count));
+                        current = new ExpressionSegment()
+                        {
+                            Index = index++,
+                            Expr = expr.Substring(offset + 1, count),
+                            IsString = true,
+                            Offset = offset,
+                            Length = count + 2,
+                            Prev = prev,
+                        };
+                        yield return current;
+                        prev = current;
                         offset = i + 1;
                         isString = false;
                         continue;
@@ -394,7 +429,21 @@ namespace LWJ.Expressions.Script
 
                 if (count > 0)
                 {
-                    yield return expr.Substring(offset, count);
+                    current = new ExpressionSegment()
+                    {
+                        Index = index++,
+                        Expr = expr.Substring(offset, count),
+                        Offset = offset,
+                        Length = count,
+                        Prev = prev,
+                    };
+                    if (isDigit)
+                        current.IsDigit = true;
+                    else
+                        current.IsOper = kws.ContainsKey(current.Expr);
+
+                    yield return current;
+                    prev = current;
 
                 }
                 i--;
@@ -403,14 +452,28 @@ namespace LWJ.Expressions.Script
             }
 
             if (len > offset)
-                yield return expr.Substring(offset, len - offset);
-
+            {
+                current = new ExpressionSegment()
+                {
+                    Index = index++,
+                    Expr = expr.Substring(offset, len - offset),
+                    Offset = offset,
+                    Length = len - offset,
+                    Prev = prev
+                };
+                if (isDigit)
+                    current.IsDigit = true;
+                else
+                    current.IsOper = kws.ContainsKey(current.Expr);
+                yield return current;
+                prev = current;
+            }
         }
 
         private Dictionary<string, Expression> cachedExprs = new Dictionary<string, Expression>();
 
 
-        public Expression Parse(string expr, CompileContext ctx = null)
+        public Expression Parse(string expr, CompileContext ctx = null, Dictionary<Expression, ExpressionSegment> segments = null)
         {
             if (expr == null)
                 throw new Exception("expr null");
@@ -427,34 +490,43 @@ namespace LWJ.Expressions.Script
             }
 
             Stack<Expression> s1 = new Stack<Expression>();
-            Stack<KeywordInfo> s2 = new Stack<KeywordInfo>();
+            Stack<PartInfo> s2 = new Stack<PartInfo>();
             Stack<string> variables = new Stack<string>();
             Stack<CompileContext> ctxs = new Stack<CompileContext>();
             ctxs.Push(ctx);
             PushScope(ctxs);
 
 
-            foreach (var part1 in ToParts(expr))
+            foreach (var segment in ToParts(expr))
             {
-                if (part1 is Expression)
+                if (segment.IsString)
                 {
-                    s1.Push((Expression)part1);
+                    s1.Push(Expression.Constant<string>(segment.Expr));
+                    //s1.Push((Expression)part1);
+                    if (segments != null)
+                        segments[s1.Peek()] = segment;
                     continue;
                 }
-                string part = part1 as string;
-                Console.WriteLine("part:" + part);
-                if (kws.ContainsKey(part))
+                string exprPart = segment.Expr;
+                Console.WriteLine("part:" + exprPart);
+                if (kws.ContainsKey(exprPart))
+                // if(segment.IsKeyword)
                 {
-                    var kw = kws[part];
+                    var part = new PartInfo()
+                    {
+                        segment = segment,
+                        keywordInfo = kws[exprPart]
+                    };
+                    var kw = part.keywordInfo;
                     if (kw.Keyword == ")")
                     {
 
-                        while (s2.Count > 0 && s2.Peek().Keyword != "(")
+                        while (s2.Count > 0 && s2.Peek().keywordInfo.Keyword != "(")
                         {
                             var tmp = s2.Pop();
-                            s1.Push(GetExpr(tmp.Keyword, s1, s2));
+                            s1.Push(GetExpr(tmp, s1, s2));
 
-                            if (s2.Peek().Keyword == ",")
+                            if (s2.Peek().keywordInfo.Keyword == ",")
                             {
 
                             }
@@ -468,7 +540,14 @@ namespace LWJ.Expressions.Script
                         {
                             contentNode = null;
                         }
+                        if (s1.Peek() is JoinExpression)
+                        {
+                            var join = s1.Pop() as JoinExpression;
+                            join.List.Insert(0, contentNode);
+                            contentNode = join;
 
+                        }
+                        //pop group
                         s1.Pop();
                         bool isGroup = true;
 
@@ -494,7 +573,12 @@ namespace LWJ.Expressions.Script
                                 {
                                     s1.Pop();
                                     s1.Push(Expression.Call(d.Instance, d.Member.Name, args));
-
+                                    if (segments != null)
+                                    {
+                                        var seg = segments[d];
+                                        segments.Remove(d);
+                                        segments[s1.Peek()] = seg;
+                                    }
                                 }
                             }
                             else
@@ -506,6 +590,12 @@ namespace LWJ.Expressions.Script
                                     MethodInfo mInfo = ctx.Context.GetVariable(p.Name) as MethodInfo;
                                     s1.Pop();
                                     s1.Push(Expression.Call(mInfo, args));
+                                    if (segments != null)
+                                    {
+                                        var seg = segments[p];
+                                        segments.Remove(p);
+                                        segments[s1.Peek()] = seg;
+                                    }
                                 }
                             }
                             isGroup = false;
@@ -521,6 +611,26 @@ namespace LWJ.Expressions.Script
 
                         s2.Pop();
                     }
+                    else if (kw.Keyword == ",")
+                    {
+
+                        while (s2.Count > 0 && s2.Peek().keywordInfo.Keyword != "(")
+                        {
+                            s1.Push(GetExpr(s2.Pop(), s1, s2));
+                        }
+                        var left = PopData(s1);
+                        JoinExpression join;
+                        if (s1.Count > 0 && s1.Peek() is JoinExpression)
+                        {
+                            join = s1.Peek() as JoinExpression;
+                        }
+                        else
+                        {
+                            join = new JoinExpression();
+                            s1.Push(join);
+                        }
+                        join.List.Insert(0, left);
+                    }
                     else
                     {
 
@@ -530,63 +640,85 @@ namespace LWJ.Expressions.Script
 
                         }
 
-                        while (s2.Count > 0 && kw.Priority != 0 &&/* s2.Peek().Priority != 0 &&*/ s2.Peek().Priority > kw.Priority)
+                        while (s2.Count > 0 && kw.Priority != 0 &&/* s2.Peek().Priority != 0 &&*/ s2.Peek().keywordInfo.Priority > kw.Priority)
                         {
                             var tmp = s2.Pop();
-                            s1.Push(GetExpr(tmp.Keyword, s1, s2));
+                            s1.Push(GetExpr(tmp, s1, s2));
+
                         }
-                        s2.Push(kw);
+                        s2.Push(part);
                     }
                 }
                 else
                 {
-                    switch (part.ToLower())
+                    switch (exprPart.ToLower())
                     {
                         case "true":
                             s1.Push(Expression.True);
+                            if (segments != null)
+                                segments[s1.Peek()] = segment;
                             continue;
                         case "false":
                             s1.Push(Expression.False);
+                            if (segments != null)
+                                segments[s1.Peek()] = segment;
                             continue;
                         case "null":
                             s1.Push(Expression.Null);
+                            if (segments != null)
+                                segments[s1.Peek()] = segment;
                             continue;
                             //case "undefined":
                             //    s1.Push(Expression.Undefined);
                             //    continue;
                     }
 
-                    if (IsDigit(part[0]))
+                    if (segment.IsDigit)
                     {
-                        long l;
-                        if (long.TryParse(part, out l))
+                        if (segment.Expr.IndexOf('.') >= 0)
                         {
-                            s1.Push(Expression.Constant(l));
-                            continue;
+                            double f;
+                            if (double.TryParse(exprPart, out f))
+                            {
+                                s1.Push(Expression.Constant(f));
+                                if (segments != null)
+                                    segments[s1.Peek()] = segment;
+                                continue;
+                            }
                         }
-                        double f;
-                        if (double.TryParse(part, out f))
+                        else
                         {
-                            s1.Push(Expression.Constant(f));
-                            continue;
+                            long l;
+                            if (long.TryParse(exprPart, out l))
+                            {
+                                s1.Push(Expression.Constant(l));
+                                if (segments != null)
+                                    segments[s1.Peek()] = segment;
+                                continue;
+                            }
                         }
+
                     }
 
 
-                    if (s2.Count > 0 && s2.Peek().Keyword == ".")
+                    if (s2.Count > 0 && s2.Peek().keywordInfo.Keyword == ".")
                     {
 
                         var variable = s1.Pop();
-                        var member = GetMember(variable, null, part, BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.GetField | BindingFlags.GetProperty);
+                        var member = GetMember(variable, null, exprPart, BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.InvokeMethod | BindingFlags.GetField | BindingFlags.GetProperty);
                         if (member == null)
-                            throw new Exception("not found Member :" + part);
+                            throw new Exception("not found Member :" + exprPart);
                         if (member.MemberType == MemberTypes.Method)
                         {
-                            s1.Push(Expression.Member(variable, null, part));
+                            s1.Push(Expression.Member(variable, null, exprPart));
+                            if (segments != null)
+                                segments[s1.Peek()] = segment;
                         }
                         else
                         {
                             s1.Push(Expression.PropertyOrField(variable, member.Name));
+                            if (segments != null)
+                                segments[s1.Peek()] = segment;
                         }
 
                         s2.Pop();
@@ -595,7 +727,9 @@ namespace LWJ.Expressions.Script
                     else
                     {
                         //variable
-                        s1.Push(Expression.Variable(GetVariableType(ctxs, part), part));
+                        s1.Push(Expression.Variable(GetVariableType(ctxs, exprPart), exprPart));
+                        if (segments != null)
+                            segments[s1.Peek()] = segment;
                     }
                     //  variables.Push(part);
 
@@ -606,7 +740,7 @@ namespace LWJ.Expressions.Script
             while (s2.Count > 0)
             {
                 var tmp = s2.Pop();
-                s1.Push(GetExpr(tmp.Keyword, s1, s2));
+                s1.Push(GetExpr(tmp, s1, s2));
             }
 
             result = PopData(s1);
@@ -675,6 +809,25 @@ namespace LWJ.Expressions.Script
             {
                 throw new NotImplementedException();
             }
+        }
+
+        public class ExpressionSegment
+        {
+            public string Expr;
+            public int Offset;
+            public int Length;
+            public bool IsString;
+            public bool IsDigit;
+            public bool IsKeyword;
+            public bool IsOper;
+            public int Index;
+            public ExpressionSegment Prev;
+        }
+
+        class PartInfo
+        {
+            public ExpressionSegment segment;
+            public KeywordInfo keywordInfo;
         }
 
     }
