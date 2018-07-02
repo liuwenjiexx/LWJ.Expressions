@@ -26,6 +26,20 @@ namespace LWJ.Expressions.Script.Test
 
         }
 
+        [TestMethod]
+        public void Params()
+        {
+            ExpressionContext ctx = new ExpressionContext();
+            AddMember(ctx, typeof(Math));
+
+            CheckExpr("max(1,2)", 2D, ctx);
+            CheckExpr("max2(1,2)", 2D, ctx);
+            CheckExpr("max2(1,2,3)", 3D, ctx);
+
+            CheckExpr("max3(1)", 1D, ctx);
+            CheckExpr("max3(1,2)", 2D, ctx);
+
+        }
         static void AddMember(ExpressionContext ctx, Type type)
         {
             BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.GetProperty | BindingFlags.GetField;
@@ -97,6 +111,25 @@ namespace LWJ.Expressions.Script.Test
                 return a;
             return b;
         }
+        [ExportMember]
+        public static double max2(double a, params double[] b)
+        {
+            var ret = a;
+            foreach (var item in b)
+                if (item > ret)
+                    ret = item;
+            return ret;
+        }
+        [ExportMember]
+        public static double max3(params double[] b)
+        {
+            var ret = b[0];
+            foreach (var item in b)
+                if (item > ret)
+                    ret = item;
+            return ret;
+        }
+
         [ExportMember]
         public static double min(double a, double b)
         {

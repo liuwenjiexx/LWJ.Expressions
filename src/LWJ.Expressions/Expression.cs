@@ -328,8 +328,17 @@ namespace LWJ.Expressions
             }
             var mInfo = objType.GetMethod(methodName, methodArgTypes);
             if (mInfo == null)
-                throw new MissingMethodException(objType.FullName, methodName);
+            {
+                foreach (var m in objType.GetMethods())
+                {
+                    if (m.Name == methodName)
+                    {
 
+                    }
+                }
+                if (mInfo == null)
+                    throw new MissingMethodException(objType.FullName, methodName);
+            }
             return Call(instance, mInfo, arguments);
         }
 
