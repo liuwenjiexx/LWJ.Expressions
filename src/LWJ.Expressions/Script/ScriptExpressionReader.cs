@@ -543,7 +543,8 @@ namespace LWJ.Expressions.Script
                         if (s1.Peek() is JoinExpression)
                         {
                             var join = s1.Pop() as JoinExpression;
-                            join.List.Insert(0, contentNode);
+                            //join.List.Insert(0, contentNode);
+                            join.List.Add(contentNode);
                             contentNode = join;
 
                         }
@@ -597,6 +598,19 @@ namespace LWJ.Expressions.Script
                                         segments[s1.Peek()] = seg;
                                     }
                                 }
+                                else if (p.ValueType.IsSubclassOf(typeof(Delegate)))
+                                {
+                                    Type delType = p.ValueType;
+                                    var mInfo = delType.GetMethod("Invoke");
+
+                                    s1.Push(Expression.Call(s1.Pop(), mInfo.ReturnType, args));
+                                    if (segments != null)
+                                    {
+                                        var seg = segments[p];
+                                        segments.Remove(p);
+                                        segments[s1.Peek()] = seg;
+                                    }
+                                }
                             }
                             isGroup = false;
                         }
@@ -629,7 +643,8 @@ namespace LWJ.Expressions.Script
                             join = new JoinExpression();
                             s1.Push(join);
                         }
-                        join.List.Insert(0, left);
+                        //join.List.Insert(0, left);
+                        join.List.Add(left);
                     }
                     else
                     {

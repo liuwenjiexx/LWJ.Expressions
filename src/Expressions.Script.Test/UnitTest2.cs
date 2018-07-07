@@ -13,6 +13,8 @@ namespace LWJ.Expressions.Script.Test
             ExpressionContext ctx = new ExpressionContext();
             AddMember(ctx, typeof(Math));
 
+            CheckExpr("sub(1,2)", -1D, ctx);
+            CheckExpr("sub3(1,2,3)", -4D, ctx);
             CheckExpr("max(1,2)", 2D, ctx);
             CheckExpr("max(-1,-2)", -1D, ctx);
 
@@ -84,6 +86,65 @@ namespace LWJ.Expressions.Script.Test
             Assert.AreEqual(expectedResult, result, exprString);
         }
 
+        [TestMethod]
+        public void TestInstanceFunc()
+        {
+            object result;
+            MyObj obj = new MyObj(1);
+            ExpressionContext ctx = new ExpressionContext();
+            ctx.AddVariable<Func<long, long>>("add");
+            ctx.SetVariable("add", new Func<long, long>(obj.Add));
+            CompileContext comple = new CompileContext(ctx);
+            var expr = ScriptExpressionReader.Instance.Parse("add(2)", comple);
+
+            result = comple.Compile(expr)(ctx);
+            Assert.AreEqual(result, 3L);
+        }
+        [TestMethod]
+        public void TestInstanceFuncParams()
+        {
+            object result;
+            MyObj obj = new MyObj(1);
+            ExpressionContext ctx = new ExpressionContext();
+            ctx.AddVariable<Func<long, long[], long>>("sum");
+            ctx.SetVariable("sum", new Func<long, long[], long>(obj.Sum));
+            CompileContext comple = new CompileContext(ctx);
+
+            var expr = ScriptExpressionReader.Instance.Parse("sum(2)", comple);
+            result = comple.Compile(expr)(ctx);
+            Assert.AreEqual(result, 3L);
+            expr = ScriptExpressionReader.Instance.Parse("sum(2,3)", comple);
+            result = comple.Compile(expr)(ctx);
+            Assert.AreEqual(result, 6L);
+            expr = ScriptExpressionReader.Instance.Parse("sum(2,3,4)", comple);
+            result = comple.Compile(expr)(ctx);
+            Assert.AreEqual(result, 10L);
+        }
+        class MyObj
+        {
+            private int n;
+            public MyObj(int n)
+            {
+                this.n = n;
+            }
+            public long Add(long a)
+            {
+                return a + n;
+            }
+
+            public long Sum(long a, params long[] items)
+            {
+                long n1 = n;
+                n1 += a;
+                foreach (var b in items)
+                {
+                    n1 += b;
+                }
+                return n1;
+            }
+
+        }
+
     }
 
     public class ExportMemberAttribute : Attribute
@@ -110,6 +171,16 @@ namespace LWJ.Expressions.Script.Test
             if (a > b)
                 return a;
             return b;
+        }
+        [ExportMember]
+        public static double sub(double a, double b)
+        {
+            return a - b;
+        }
+        [ExportMember]
+        public static double sub3(double a, double b, double c)
+        {
+            return a - b - c;
         }
         [ExportMember]
         public static double max2(double a, params double[] b)

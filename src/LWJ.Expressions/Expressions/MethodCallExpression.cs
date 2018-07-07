@@ -34,13 +34,14 @@ namespace LWJ.Expressions
 
         public MethodInfo Method => method;
 
+
         public override CompiledDelegate Compile(CompileContext ctx)
         {
 
             var mInfo = this.method;
             var argumentEvals = this.arguments.Select(o => o.Compile(ctx)).ToArray();
             int argLength = argumentEvals.Length;
-
+            bool isParamArray = mInfo.IsParamArray();
 
             if (mInfo.IsStatic)
             {
@@ -49,24 +50,28 @@ namespace LWJ.Expressions
                     var args = new object[argLength];
                     for (int i = 0; i < argLength; i++)
                         args[i] = argumentEvals[i](invoke);
-                    var param1 = mInfo.GetParameters();
-                    if (param1.Length > 0 && param1[param1.Length - 1].ParameterType.IsArray)
+                    if (isParamArray)
                     {
-                        var last = param1[param1.Length - 1];
-                        if (last.ParameterType != args[param1.Length - 1].GetType())
-                        {
-                            var array = Array.CreateInstance(last.ParameterType.GetElementType(), args.Length - param1.Length + 1);
-                            int offset = param1.Length - 1;
-                            for (int i = 0; i < array.Length; i++)
-                            {
-                                array.SetValue(args[offset + i], i);
-                            }
-                            var newArgs = new object[param1.Length];
-                            Array.Copy(args, newArgs, newArgs.Length - 1);
-                            newArgs[newArgs.Length - 1] = array;
-                            args = newArgs;
-                        }
+                        args = mInfo.AlignParamArrayArguments(args);
                     }
+                    //var param1 = mInfo.GetParameters();
+                    //if (param1.Length > 0 && param1[param1.Length - 1].ParameterType.IsArray)
+                    //{
+                    //    var last = param1[param1.Length - 1];
+                    //    if (last.ParameterType != args[param1.Length - 1].GetType())
+                    //    {
+                    //        var array = Array.CreateInstance(last.ParameterType.GetElementType(), args.Length - param1.Length + 1);
+                    //        int offset = param1.Length - 1;
+                    //        for (int i = 0; i < array.Length; i++)
+                    //        {
+                    //            array.SetValue(args[offset + i], i);
+                    //        }
+                    //        var newArgs = new object[param1.Length];
+                    //        Array.Copy(args, newArgs, newArgs.Length - 1);
+                    //        newArgs[newArgs.Length - 1] = array;
+                    //        args = newArgs;
+                    //    }
+                    //}
                     return mInfo.Invoke(null, args);
                 };
             }

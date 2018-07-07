@@ -25,17 +25,24 @@ namespace LWJ.Expressions
             else
                 this.arguments = new ReadOnlyCollection<Expression>(arguments.ToArray());
         }
-         
+
+        public new Expression Function { get => function; }
+
+        public ReadOnlyCollection<Expression> Arguments { get => arguments; }
 
         public override CompiledDelegate Compile(CompileContext ctx)
         {
-
+            
             var funcEval = function.Compile(ctx);
             var evalArgs = arguments.Select(o => o.Compile(ctx)).ToArray();
             return (invoke) =>
             {
                 var func = (Delegate)funcEval(invoke);
                 var args = evalArgs.Select(o => o(invoke)).ToArray();
+                if (func.Method.IsParamArray())
+                {
+                    args = func.Method.AlignParamArrayArguments(args);
+                }
                 return func.DynamicInvoke(args);
             };
         }
@@ -45,6 +52,6 @@ namespace LWJ.Expressions
             return "call func: {0}".FormatArgs(function);
         }
 
-       
+
     }
 }
