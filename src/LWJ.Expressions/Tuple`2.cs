@@ -1,11 +1,4 @@
-﻿/**************************************************************
- *  Filename:    Tuple`2.cs
- *  Copyright:  © 2017 WenJie Liu. All rights reserved.
- *  Description: LWJ ClassFile
- *  @author:     WenJie Liu
- *  @version     2017/2/27
- **************************************************************/
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 
 namespace LWJ.Expressions

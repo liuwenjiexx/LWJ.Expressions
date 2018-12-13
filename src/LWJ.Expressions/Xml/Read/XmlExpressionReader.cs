@@ -1,10 +1,4 @@
-﻿/**************************************************************
- *  Filename:    XmlExpressionReader.cs
- *  Description: LWJ.Expressions ClassFile
- *  @author:     WenJie Liu
- *  @version     2017/4/2
- **************************************************************/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
