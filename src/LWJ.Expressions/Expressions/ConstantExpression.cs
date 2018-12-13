@@ -32,6 +32,13 @@ namespace LWJ.Expressions
             };
         }
 
+        public override string ToString()
+        {
+            if (value == null)
+                return "(null)";
+            return value.ToString();
+        }
+
     }
 
 }

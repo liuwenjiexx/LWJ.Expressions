@@ -64,15 +64,15 @@ namespace LWJ.Expressions
             }
             else if (ifTrueEval == null)
             {
-                return (invoke) => (bool)testEval(invoke) ? null : ifFalseEval(invoke);
+                return (invoke) => DefaultOperators.IsTrue(testEval(invoke)) ? null : ifFalseEval(invoke);
             }
             else if (ifFalseEval == null)
             {
-                return (invoke) => (bool)testEval(invoke) ? ifTrueEval(invoke) : null;
+                return (invoke) => DefaultOperators.IsTrue(testEval(invoke)) ? ifTrueEval(invoke) : null;
             }
             else
             {
-                return (invoke) => (bool)testEval(invoke) ? ifTrueEval(invoke) : ifFalseEval(invoke);
+                return (invoke) => DefaultOperators.IsTrue(testEval(invoke)) ? ifTrueEval(invoke) : ifFalseEval(invoke);
             }
 
         }

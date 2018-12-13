@@ -356,7 +356,7 @@ namespace LWJ.Expressions.Xml
 
         private static void WriteMember(XmlExpressionWriter writer, Expression expr)
         {
-            ＭemberExpression member = (ＭemberExpression)expr;
+            MemberExpression member = (MemberExpression)expr;
 
             if (member.IsPropertyOrField)
             {

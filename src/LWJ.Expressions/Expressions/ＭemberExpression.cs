@@ -8,7 +8,7 @@ namespace LWJ.Expressions
     /// <summary>
     /// field or property access
     /// </summary>
-    public class ＭemberExpression : AccessableExpression
+    public class MemberExpression : AccessableExpression
     {
         private MemberInfo member;
         private Expression instance;
@@ -18,10 +18,10 @@ namespace LWJ.Expressions
         private Type classType;
 
 
-        internal ＭemberExpression(Expression instance, Type classType, MemberInfo member,  bool? isProperty)
-            : base(ExpressionType.Member, member is PropertyInfo ? ((PropertyInfo)member).PropertyType : ((FieldInfo)member).FieldType)
+        internal MemberExpression(Expression instance, Type classType, MemberInfo member, bool? isProperty)
+            : base(ExpressionType.Member, member is PropertyInfo ? ((PropertyInfo)member).PropertyType : member is FieldInfo ? ((FieldInfo)member).FieldType : typeof(object))
         {
-            this.instance = instance??Expression.Null;
+            this.instance = instance ?? Expression.Null;
             this.classType = classType;
             this.member = member;
             //this.valueType = valueType;

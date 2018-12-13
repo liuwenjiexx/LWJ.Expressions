@@ -322,8 +322,17 @@ namespace LWJ.Expressions
             }
             var mInfo = objType.GetMethod(methodName, methodArgTypes);
             if (mInfo == null)
-                throw new MissingMethodException(objType.FullName, methodName);
+            {
+                foreach (var m in objType.GetMethods())
+                {
+                    if (m.Name == methodName)
+                    {
 
+                    }
+                }
+                if (mInfo == null)
+                    throw new MissingMethodException(objType.FullName, methodName);
+            }
             return Call(instance, mInfo, arguments);
         }
 
@@ -369,14 +378,14 @@ namespace LWJ.Expressions
         }
 
 
-        public static ＭemberExpression Field(Expression instance, FieldInfo field)
+        public static MemberExpression Field(Expression instance, FieldInfo field)
         {
             if (field == null) throw new ArgumentNullException(nameof(field));
             if (!field.IsStatic && instance == null) throw new ArgumentNullException(nameof(instance));
 
-            return new ＭemberExpression(instance, field.FieldType, field, false);
+            return new MemberExpression(instance, field.FieldType, field, false);
         }
-        public static ＭemberExpression Field(Expression instance, string fieldName)
+        public static MemberExpression Field(Expression instance, string fieldName)
         {
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             return Field(instance, null, fieldName);
@@ -384,33 +393,33 @@ namespace LWJ.Expressions
         /// <summary>
         /// static field
         /// </summary>
-        public static ＭemberExpression Field(Type type, string fieldName)
+        public static MemberExpression Field(Type type, string fieldName)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
             return Field(null, type, fieldName);
         }
 
-        public static ＭemberExpression Field(Expression instance, Type type, string fieldName)
+        public static MemberExpression Field(Expression instance, Type type, string fieldName)
         {
             if (fieldName == null) throw new ArgumentNullException(nameof(fieldName));
             BindingFlags flags;
             flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.GetField | BindingFlags.SetField;
             var mInfo = GetMember(instance, type, fieldName, flags);
             if (mInfo == null) throw new MissingFieldException(type.FullName, fieldName);
-            return new ＭemberExpression(instance, type, mInfo, true);
+            return new MemberExpression(instance, type, mInfo, true);
         }
 
 
-        public static ＭemberExpression Property(Expression instance, PropertyInfo property)
+        public static MemberExpression Property(Expression instance, PropertyInfo property)
         {
             if (property == null) throw new ArgumentNullException(nameof(property));
 
             if (property.CanRead && !property.GetGetMethod().IsStatic && instance == null) throw new ArgumentNullException("Property Not Is Static", nameof(instance));
             if (property.CanWrite && !property.GetSetMethod().IsStatic && instance == null) throw new ArgumentNullException("Property Not Is Static", nameof(instance));
 
-            return new ＭemberExpression(instance, property.DeclaringType, property, true);
+            return new MemberExpression(instance, property.DeclaringType, property, true);
         }
-        public static ＭemberExpression Property(Expression instance, string propertyName)
+        public static MemberExpression Property(Expression instance, string propertyName)
         {
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             return Property(instance, null, propertyName);
@@ -418,32 +427,32 @@ namespace LWJ.Expressions
         /// <summary>
         /// static property
         /// </summary>
-        public static ＭemberExpression Property(Type type, string propertyName)
+        public static MemberExpression Property(Type type, string propertyName)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
             return Property(null, type, propertyName);
         }
-        public static ＭemberExpression Property(Expression instance, Type type, string propertyName)
+        public static MemberExpression Property(Expression instance, Type type, string propertyName)
         {
             if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
             BindingFlags flags;
             flags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.GetProperty | BindingFlags.SetProperty;
             var mInfo = GetMember(instance, type, propertyName, flags);
             if (mInfo == null) throw new MissingMemberException(type.FullName, propertyName);
-            return new ＭemberExpression(instance, type, mInfo, true);
+            return new MemberExpression(instance, type, mInfo, true);
         }
 
-        public static ＭemberExpression PropertyOrField(Type type, string propertyOrField)
+        public static MemberExpression PropertyOrField(Type type, string propertyOrField)
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
             return PropertyOrField(null, type, propertyOrField);
         }
-        public static ＭemberExpression PropertyOrField(Expression instance, string propertyOrField)
+        public static MemberExpression PropertyOrField(Expression instance, string propertyOrField)
         {
             if (instance == null) throw new ArgumentNullException(nameof(instance));
             return PropertyOrField(instance, null, propertyOrField);
         }
-        public static ＭemberExpression PropertyOrField(Expression instance, Type type, string propertyOrField)
+        public static MemberExpression PropertyOrField(Expression instance, Type type, string propertyOrField)
         {
             if (propertyOrField == null) throw new ArgumentNullException(nameof(propertyOrField));
             BindingFlags flags;
@@ -451,10 +460,23 @@ namespace LWJ.Expressions
             var mInfo = GetMember(instance, type, propertyOrField, flags);
             if (mInfo == null) throw new MissingMemberException(type.FullName, propertyOrField);
 
-            return new ＭemberExpression(instance, type, mInfo, null);
+            return new MemberExpression(instance, type, mInfo, null);
         }
 
+        public static MemberExpression Member(Expression instance, Type type, string memberName)
+        {
+            if (memberName == null) throw new ArgumentNullException(nameof(memberName));
 
+            Type objType = type;
+            if (objType == null)
+                objType = instance.ValueType;
+            if (objType == null)
+                throw new ArgumentNullException(nameof(type));
+            var mInfos = objType.GetMember(memberName);
+            if (mInfos == null || mInfos.Length == 0) throw new MissingMemberException(type.FullName, memberName);
+
+            return new MemberExpression(instance, type, mInfos[0], null);
+        }
 
         public static AssignExpression Assign(AccessableExpression left, Expression right)
         {
@@ -703,10 +725,15 @@ namespace LWJ.Expressions
         {
             return CurrentOrDefault.GetOperatorInfo(operatorType, operType1, operType2).method;
         }
+        public static GroupExpression Group(Expression expr)
+        {
+            return new GroupExpression(expr);
+        }
     }
 
     public delegate object CompiledDelegate(InvocationContext invoke);
 
     public delegate object InvocationDelegate(IExpressionContext ctx);
+
 
 }

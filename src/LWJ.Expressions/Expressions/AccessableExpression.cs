@@ -3,7 +3,7 @@
 namespace LWJ.Expressions
 {
     /// <summary>
-    /// <see cref="VariableException"/>, <see cref="ＭemberExpression"/>
+    /// <see cref="VariableException"/>, <see cref="MemberExpression"/>
     /// </summary>
     public abstract class AccessableExpression : Expression
     {

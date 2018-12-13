@@ -1,30 +1,59 @@
-﻿
+﻿using System;
+
 namespace LWJ.Expressions
 {
 
-      partial class DefaultOperators
+    partial class DefaultOperators
     {
         #region Logic
 
-        public static bool Is(object obj)
+        public static bool IsTrue(object obj)
         {
             if (obj == null)
                 return false;
             if (obj is bool)
                 return (bool)obj;
+            var objType = obj.GetType();
+            if (objType.IsPrimitive)
+            {
+                switch (Type.GetTypeCode(objType))
+                {
+                    case TypeCode.Int32:
+                        return (int)obj != 0;
+                    case TypeCode.Int64:
+                        return (long)obj != 0;
+                    case TypeCode.Single:
+                        return (float)obj != 0.0f;
+                    case TypeCode.Double:
+                        return (double)obj != 0.0d;
+                }
+            }
+            else
+            {
+                if (objType == typeof(string))
+                    return ((string)obj).Length != 0;
+            }
             return true;
         }
 
         [OverrideOperator]
-        public static bool And(InvocationContext invoke, CompiledDelegate oper1, CompiledDelegate oper2)
+        public static object And(InvocationContext invoke, CompiledDelegate oper1, CompiledDelegate oper2)
         {
-            return Is(oper1(invoke)) && Is(oper2(invoke));
+            object ret = oper1(invoke);
+            if (!IsTrue(ret))
+                return ret;
+            return oper2(invoke);
+            //return Is(oper1(invoke)) && Is(oper2(invoke));
         }
 
         [OverrideOperator]
-        public static bool Or(InvocationContext invoke, CompiledDelegate oper1, CompiledDelegate oper2)
+        public static object Or(InvocationContext invoke, CompiledDelegate oper1, CompiledDelegate oper2)
         {
-            return Is(oper1(invoke)) || Is(oper2(invoke));
+            object ret = oper1(invoke);
+            if (IsTrue(ret))
+                return ret;
+            return oper2(invoke);
+            //return Is(oper1(invoke)) || Is(oper2(invoke));
         }
 
         [OverrideOperator]
