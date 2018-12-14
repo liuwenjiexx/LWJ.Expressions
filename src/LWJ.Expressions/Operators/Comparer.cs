@@ -1,8 +1,12 @@
-﻿
+﻿using System;
+
 namespace LWJ.Expressions
 {
     partial class DefaultOperators
     {
+
+        private static readonly double Epsilon = 0.00001d;
+        private static bool Approximately(double a, double b) => b - Epsilon <= a && a <= b + Epsilon;
 
 
         #region Equal
@@ -10,7 +14,7 @@ namespace LWJ.Expressions
 
         [OverrideOperator]
         public static bool Equal(object a, object b) => object.Equals(a, b);
-        
+
         [OverrideOperator]
         public static bool Equal(byte a, byte b) => a == b;
         [OverrideOperator]
@@ -20,9 +24,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool Equal(byte a, long b) => a == b;
         [OverrideOperator]
-        public static bool Equal(byte a, float b) => a == b;
+        public static bool Equal(byte a, float b) => Approximately(a, b);
         [OverrideOperator]
-        public static bool Equal(byte a, double b) => a == b;
+        public static bool Equal(byte a, double b) => Approximately(a, b);
 
         [OverrideOperator]
         public static bool Equal(short a, byte b) => a == b;
@@ -33,9 +37,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool Equal(short a, long b) => a == b;
         [OverrideOperator]
-        public static bool Equal(short a, float b) => a == b;
+        public static bool Equal(short a, float b) => Approximately(a, b);
         [OverrideOperator]
-        public static bool Equal(short a, double b) => a == b;
+        public static bool Equal(short a, double b) => Approximately(a, b);
 
         [OverrideOperator]
         public static bool Equal(int a, byte b) => a == b;
@@ -46,9 +50,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool Equal(int a, long b) => a == b;
         [OverrideOperator]
-        public static bool Equal(int a, float b) => a == b;
+        public static bool Equal(int a, float b) => Approximately(a, b);
         [OverrideOperator]
-        public static bool Equal(int a, double b) => a == b;
+        public static bool Equal(int a, double b) => Approximately(a, b);
 
         [OverrideOperator]
         public static bool Equal(long a, byte b) => a == b;
@@ -59,9 +63,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool Equal(long a, long b) => a == b;
         [OverrideOperator]
-        public static bool Equal(long a, float b) => a == b;
+        public static bool Equal(long a, float b) => Approximately(a, b);
         [OverrideOperator]
-        public static bool Equal(long a, double b) => a == b;
+        public static bool Equal(long a, double b) => Approximately(a, b);
 
         [OverrideOperator]
         public static bool Equal(float a, byte b) => a == b;
@@ -72,9 +76,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool Equal(float a, long b) => a == b;
         [OverrideOperator]
-        public static bool Equal(float a, float b) => a == b;
+        public static bool Equal(float a, float b) => Approximately(a, b);
         [OverrideOperator]
-        public static bool Equal(float a, double b) => a == b;
+        public static bool Equal(float a, double b) => Approximately(a, b);
 
         [OverrideOperator]
         public static bool Equal(double a, byte b) => a == b;
@@ -85,9 +89,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool Equal(double a, long b) => a == b;
         [OverrideOperator]
-        public static bool Equal(double a, float b) => a == b;
+        public static bool Equal(double a, float b) => Approximately(a, b);
         [OverrideOperator]
-        public static bool Equal(double a, double b) => a == b;
+        public static bool Equal(double a, double b) => Approximately(a, b);
 
         #endregion
 
@@ -106,9 +110,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool NotEqual(byte a, long b) => a != b;
         [OverrideOperator]
-        public static bool NotEqual(byte a, float b) => a != b;
+        public static bool NotEqual(byte a, float b) => !Approximately(a, b);
         [OverrideOperator]
-        public static bool NotEqual(byte a, double b) => a != b;
+        public static bool NotEqual(byte a, double b) => !Approximately(a, b);
 
         [OverrideOperator]
         public static bool NotEqual(short a, byte b) => a != b;
@@ -119,9 +123,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool NotEqual(short a, long b) => a != b;
         [OverrideOperator]
-        public static bool NotEqual(short a, float b) => a != b;
+        public static bool NotEqual(short a, float b) => !Approximately(a, b);
         [OverrideOperator]
-        public static bool NotEqual(short a, double b) => a != b;
+        public static bool NotEqual(short a, double b) => !Approximately(a, b);
 
         [OverrideOperator]
         public static bool NotEqual(int a, byte b) => a != b;
@@ -132,9 +136,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool NotEqual(int a, long b) => a != b;
         [OverrideOperator]
-        public static bool NotEqual(int a, float b) => a != b;
+        public static bool NotEqual(int a, float b) => !Approximately(a, b);
         [OverrideOperator]
-        public static bool NotEqual(int a, double b) => a != b;
+        public static bool NotEqual(int a, double b) => !Approximately(a, b);
 
         [OverrideOperator]
         public static bool NotEqual(long a, byte b) => a != b;
@@ -145,9 +149,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool NotEqual(long a, long b) => a != b;
         [OverrideOperator]
-        public static bool NotEqual(long a, float b) => a != b;
+        public static bool NotEqual(long a, float b) => !Approximately(a, b);
         [OverrideOperator]
-        public static bool NotEqual(long a, double b) => a != b;
+        public static bool NotEqual(long a, double b) => !Approximately(a, b);
 
         [OverrideOperator]
         public static bool NotEqual(float a, byte b) => a != b;
@@ -158,9 +162,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool NotEqual(float a, long b) => a != b;
         [OverrideOperator]
-        public static bool NotEqual(float a, float b) => a != b;
+        public static bool NotEqual(float a, float b) => !Approximately(a, b);
         [OverrideOperator]
-        public static bool NotEqual(float a, double b) => a != b;
+        public static bool NotEqual(float a, double b) => !Approximately(a, b);
 
         [OverrideOperator]
         public static bool NotEqual(double a, byte b) => a != b;
@@ -171,9 +175,9 @@ namespace LWJ.Expressions
         [OverrideOperator]
         public static bool NotEqual(double a, long b) => a != b;
         [OverrideOperator]
-        public static bool NotEqual(double a, float b) => a != b;
+        public static bool NotEqual(double a, float b) => !Approximately(a, b);
         [OverrideOperator]
-        public static bool NotEqual(double a, double b) => a != b;
+        public static bool NotEqual(double a, double b) => !Approximately(a, b);
 
 
         #endregion

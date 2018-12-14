@@ -64,6 +64,10 @@ namespace LWJ.Expressions.Script.Test
             ctx.SetVariable("a", 1);
             CheckExpr("a==1", true, ctx);
 
+            ctx = new ExpressionContext();
+            ctx.AddVariable<float>("a");
+            ctx.SetVariable("a", 1.1f);
+            CheckExpr("a==1.1", true, ctx);
         }
 
         [TestMethod]
