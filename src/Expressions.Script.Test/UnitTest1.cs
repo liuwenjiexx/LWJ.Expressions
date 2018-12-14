@@ -58,6 +58,12 @@ namespace LWJ.Expressions.Script.Test
             CheckExpr("1==2", false);
             CheckExpr("1!=2", true);
             CheckExpr("1!=1", false);
+
+            ExpressionContext ctx = new ExpressionContext();
+            ctx.AddVariable<int>("a");
+            ctx.SetVariable("a", 1);
+            CheckExpr("a==1", true, ctx);
+
         }
 
         [TestMethod]
