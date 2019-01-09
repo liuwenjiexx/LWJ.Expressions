@@ -1,0 +1,1 @@
+"%UNITY_HOME%\Editor\Data\MonoBleedingEdge\bin\mono.exe" ¡°%UNITY_HOME%\Editor\Data\MonoBleedingEdge\lib\mono\4.5\pdb2mdb.exe"  "$(TargetPath)"

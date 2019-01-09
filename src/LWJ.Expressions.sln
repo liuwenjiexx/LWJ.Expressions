@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.LWJ.Expressions", "..\Test\Test.LWJ.Expressions\Test.LWJ.Expressions.csproj", "{309D14A0-B48B-46CF-9C40-D9C82C189A4C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{84E684F7-70D9-4761-8B64-CCC9A98DAFFE}"
+	ProjectSection(SolutionItems) = preProject
+		TextFile1.txt = TextFile1.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LWJ.Expressions.Xml.Test", "..\Test\LWJ.Expressions.Xml.Test\LWJ.Expressions.Xml.Test.csproj", "{C1659807-0350-4CC3-9A62-414655C77F2D}"
 EndProject

@@ -9,6 +9,28 @@ namespace LWJ.Expressions.Script.Test
     public class UnitTest1
     {
         [TestMethod]
+        public void Test_Object()
+        {
+            CheckExpr("null==null", true);
+            CheckExpr("null!=null", false);
+            CheckExpr("1==null", false);
+            CheckExpr("1!=null", true);
+            CheckExpr("null==1", false);
+
+            ExpressionContext ctx = new ExpressionContext();
+            ctx.AddVariable<MyClass>("obj");
+            ctx.SetVariable("obj", null);
+            CheckExpr("obj==null", true, ctx);
+            CheckExpr("null==obj", true, ctx);
+            CheckExpr("obj!=null", false, ctx);
+
+            ctx.SetVariable("obj", new MyClass());
+            CheckExpr("obj==null", false, ctx);
+            CheckExpr("null==obj", false, ctx);
+            CheckExpr("obj!=null", true, ctx);
+
+        }
+        [TestMethod]
         public void String()
         {
             CheckExpr("\"\"", "");
