@@ -1,7 +1,7 @@
-# LWJ.Expressions
+ï»¿# LWJ.Expressions
 xml script language
 
-add ·½·¨
+add æ–¹æ³•
 ``` C#
  int add(int a,int b){
    return a+b;
@@ -22,7 +22,7 @@ add ·½·¨
 </x:func>
 ```
 
-µÝ¹éµ÷ÓÃ
+é€’å½’è°ƒç”¨
 ``` C#
 static int RecursiveSum(int n)
 {
