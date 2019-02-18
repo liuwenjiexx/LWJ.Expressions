@@ -2,11 +2,13 @@
 xml script language
 
 add 方法
+C#
 ``` C#
  int add(int a,int b){
    return a+b;
  }
 ```
+XML Script
 ```
 <x:func name="add" returnType="int">
   <x:vars>
@@ -23,12 +25,14 @@ add 方法
 ```
 
 递归调用
+C#
 ``` C#
 static int RecursiveSum(int n)
 {
     return n <= 1 ? 1 : n + RecursiveSum(--n);
 }
 ```
+XML Script
 ```
   <x:func name="sum" returnType="int">
     <x:vars>
